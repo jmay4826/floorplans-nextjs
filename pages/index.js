@@ -5,7 +5,7 @@ import Layout from "../components/Layout";
 
 class Index extends React.Component {
   static async getInitialProps(free) {
-    console.log(free);
+    
     const req = await fetch("http://localhost:5000/api/users");
     const users = await req.json();
     return { users };
