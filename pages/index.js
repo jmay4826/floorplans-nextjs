@@ -1,29 +1,23 @@
-import "isomorphic-fetch";
-import { Icon, Card } from "carbon-components-react";
+import axios from "axios";
 
+import withMui from "../components/hocs/withMui";
 import Layout from "../components/Layout";
 
 class Index extends React.Component {
-  static async getInitialProps(free) {
-    
-    const req = await fetch("http://localhost:5000/api/users");
-    const users = await req.json();
-    return { users };
+  static async getInitialProps(ctx) {
+    try {
+      const data = {};
+      // const { data } = await axios.get("http://localhost:5000/authcheck");
+      return { user: data };
+    } catch (error) {
+      console.log(error);
+      return { error };
+    }
   }
   render() {
-    return (
-      <Layout title="test">
-        {JSON.stringify(this.props)}
-        <Icon
-          name="icon--add"
-          style={{ margin: "50px" }}
-          fill="grey"
-          description="This is a description of the icon and what it does…"
-          className="extra-class"
-        />
-      </Layout>
-    );
+    console.log(this.props);
+    return <Layout />;
   }
 }
 
-export default Index;
+export default withMui(Index);

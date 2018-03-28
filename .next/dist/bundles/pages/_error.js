@@ -72,17 +72,17 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
-/***/ "/Users/jonathan/dev/floorplans-react/web/node_modules/next/dist/pages/_error.js":
+/***/ "/Users/jonathan/dev/store-manager/react-floorplans/web/node_modules/next/dist/pages/_error.js":
 /***/ (function(module, exports) {
 
-module.exports = require("/Users/jonathan/dev/floorplans-react/web/node_modules/next/dist/pages/_error.js");
+module.exports = require("/Users/jonathan/dev/store-manager/react-floorplans/web/node_modules/next/dist/pages/_error.js");
 
 /***/ }),
 
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("/Users/jonathan/dev/floorplans-react/web/node_modules/next/dist/pages/_error.js");
+module.exports = __webpack_require__("/Users/jonathan/dev/store-manager/react-floorplans/web/node_modules/next/dist/pages/_error.js");
 
 
 /***/ })
