@@ -1,23 +1,21 @@
 import axios from "axios";
+import gql from "graphql-tag";
 
-import withMui from "../components/hocs/withMui";
+import withMui from "../lib/withMui";
+import withData from "../lib/withData";
 import Layout from "../components/Layout";
 
+import TestComponent from "../components/test";
+
 class Index extends React.Component {
-  static async getInitialProps(ctx) {
-    try {
-      const data = {};
-      // const { data } = await axios.get("http://localhost:5000/authcheck");
-      return { user: data };
-    } catch (error) {
-      console.log(error);
-      return { error };
-    }
-  }
   render() {
-    console.log(this.props);
-    return <Layout />;
+    console.log("indexjs", this.props);
+    return (
+      <Layout>
+        <TestComponent />
+      </Layout>
+    );
   }
 }
 
-export default withMui(Index);
+export default withData(withMui(Index));

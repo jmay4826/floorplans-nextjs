@@ -1,9 +1,3 @@
-import axios from "axios";
-import Router from "next/router";
-import Link from "next/link";
-import gql from "graphql-tag";
-import { ApolloProvider, graphql } from "react-apollo";
-
 import TextField from "material-ui/TextField";
 import Card, { CardText } from "material-ui/Card";
 
@@ -11,14 +5,6 @@ import client from "../components/client";
 import withMui from "../components/hocs/withMui";
 import Layout from "../components/Layout";
 import FlatButton from "material-ui/FlatButton";
-
-const outer = () => (
-  <ApolloProvider client={client}>
-    <Layout title="Locations">
-      <LocationsWithData />
-    </Layout>
-  </ApolloProvider>
-);
 
 class Locations extends React.Component {
   render() {
@@ -53,4 +39,4 @@ const LocationsWithData = graphql(gql`
   }
 `)(Locations);
 
-export default withMui(outer);
+export default withData(withMui(Locations));
