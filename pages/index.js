@@ -1,5 +1,6 @@
 import axios from "axios";
 import gql from "graphql-tag";
+import Link from "next/link";
 
 import withMui from "../lib/withMui";
 import withData from "../lib/withData";
@@ -13,6 +14,7 @@ class Index extends React.Component {
     return (
       <Layout>
         <TestComponent />
+        <Link href="/login">Login</Link>
       </Layout>
     );
   }

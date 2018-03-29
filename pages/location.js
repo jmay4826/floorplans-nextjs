@@ -7,12 +7,11 @@ import { ApolloProvider, graphql } from "react-apollo";
 import TextField from "material-ui/TextField";
 import Card, { CardText, CardMedia } from "material-ui/Card";
 
-import client from "../components/client";
-import withMui from "../components/hocs/withMui";
-import withData from "../components/hocs/withData";
+import withMui from "../lib/withMui";
+import withData from "../lib/withData";
 import Layout from "../components/Layout";
 import FlatButton from "material-ui/FlatButton";
-import  List  from "material-ui/List";
+import List from "material-ui/List";
 
 // const outer = props => {
 //   console.log(props);
