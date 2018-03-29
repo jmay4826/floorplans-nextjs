@@ -10,14 +10,16 @@ import TestComponent from "../components/test";
 
 class Index extends React.Component {
   render() {
-    console.log("indexjs", this.props);
     return (
       <Layout>
         <TestComponent />
-        <Link href="/login">Login</Link>
+        <Link href="/login">
+          <a>Login</a>
+        </Link>
       </Layout>
     );
   }
 }
 
 export default withData(withMui(Index));
+// export default withMui(Index);

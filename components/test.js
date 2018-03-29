@@ -13,7 +13,6 @@ const query = gql`
 `;
 
 const TestComponent = props => {
-  console.log("test", props);
   return <div>I'm here</div>;
 };
 

@@ -13,110 +13,67 @@ import Layout from "../components/Layout";
 import FlatButton from "material-ui/FlatButton";
 import List from "material-ui/List";
 
-// const outer = props => {
-//   console.log(props);
-//   return (
-//     <ApolloProvider client={client}>
-//       <Layout title={props.id}>
-//         <Location {...props.location} />
-//       </Layout>
-//     </ApolloProvider>
-//   );
-// };
-
-// outer.getInitialProps = async ctx => {
-//   const query = `{
-//     getLocation(id: "${ctx.query.id}") {
-//         name
-//         latitude
-//         longitude
-//         floorplan
-//         district
-//         active
-//         height
-//         width
-//         comments {
-//             id
-//             content
-//             author
-//             x
-//             y
-//             complete
-//         }
-//     }
-// }
-//   `;
-//   try {
-//     return {
-//       id: ctx.query.id,
-//       location: (await axios.post(`http://localhost:5000/graphql`, {
-//         query
-//       })).data.data.getLocation
-//     };
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
+import Comments from "../components/Comments";
 
 class Location extends React.Component {
-  static async getInitialProps(ctx) {
-    console.log(ctx);
-    const query = `{
-          getLocation(id: "${ctx.query.id}") {
-              name
-              latitude
-              longitude
-              floorplan
-              district
-              active
-              height
-              width
-              comments {
-                  id
-                  content
-                  author
-                  x
-                  y
-                  complete
-              }
-          }
-      }
-        `;
-    try {
-      return {
-        id: ctx.query.id,
-        location: (await axios.post(`http://localhost:5000/graphql`, {
-          query
-        })).data.data.getLocation
-      };
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  // static async getInitialProps(ctx) {
+  //   const query = `{
+  //         getLocation(id: "${ctx.query.id}") {
+  //             name
+  //             latitude
+  //             longitude
+  //             floorplan
+  //             district
+  //             active
+  //             height
+  //             width
+  //             comments {
+  //                 id
+  //                 content
+  //                 author
+  //                 x
+  //                 y
+  //                 complete
+  //             }
+  //         }
+  //     }
+  //       `;
+  //   try {
+  //     return {
+  //       id: ctx.query.id,
+  //       location: (await axios.post(`http://localhost:5000/graphql`, {
+  //         query
+  //       })).data.data.getLocation
+  //     };
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }
   render() {
     console.log(this.props);
-    const { comments } = this.props.location;
+
+    const comments = [];
+    const floorplan = "floorplans/D101.png";
+
     let open = comments.filter(({ complete }) => !complete);
     let closed = comments.filter(({ complete }) => complete);
     return (
       <Layout title={this.props.id}>
         <Card>
-          <img src={this.props.floorplan} />
+          <img
+            style={{ maxWidth: "80%" }}
+            src={
+              `https://s3.us-east-2.amazonaws.com/floorplans-uploads/` +
+              floorplan
+            }
+          />
           <CardText>{JSON.stringify(open)}</CardText>
+          <Comments />
           <Link href="/fake">Fake</Link>
         </Card>
       </Layout>
     );
   }
 }
-
-// Location = graphql(gql`
-//   query {
-//     getLocation(id: "D100") {
-//       id
-//       name
-//     }
-//   }
-// `)(Location);
 
 export default withData(withMui(Location));

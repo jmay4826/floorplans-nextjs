@@ -2,7 +2,6 @@ import { Fragment } from "react";
 import Head from "next/head";
 import { Toolbar, ToolbarGroup, ToolbarTitle } from "material-ui/Toolbar";
 import Menu from "material-ui/svg-icons/navigation/menu";
-import withMui from "../lib/withMui";
 
 const Layout = props => (
   <Fragment>
@@ -26,4 +25,4 @@ const Layout = props => (
     {props.children}
   </Fragment>
 );
-export default withMui(Layout);
+export default Layout;
