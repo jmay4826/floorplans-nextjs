@@ -2,10 +2,11 @@ import axios from "axios";
 import Router from "next/router";
 import Link from "next/link";
 import gql from "graphql-tag";
-import { ApolloProvider, graphql } from "react-apollo";
+import { Query } from "react-apollo";
 
 import TextField from "material-ui/TextField";
 import Card, { CardText, CardMedia } from "material-ui/Card";
+import Tabs, { Tab } from "material-ui/Tabs";
 
 import withMui from "../lib/withMui";
 import withData from "../lib/withData";
@@ -13,64 +14,94 @@ import Layout from "../components/Layout";
 import FlatButton from "material-ui/FlatButton";
 import List from "material-ui/List";
 
-import Comments from "../components/Comments";
+import CommentList from "../components/CommentList";
+import Markers from "../components/Markers";
 
 class Location extends React.Component {
-  // static async getInitialProps(ctx) {
-  //   const query = `{
-  //         getLocation(id: "${ctx.query.id}") {
-  //             name
-  //             latitude
-  //             longitude
-  //             floorplan
-  //             district
-  //             active
-  //             height
-  //             width
-  //             comments {
-  //                 id
-  //                 content
-  //                 author
-  //                 x
-  //                 y
-  //                 complete
-  //             }
-  //         }
-  //     }
-  //       `;
-  //   try {
-  //     return {
-  //       id: ctx.query.id,
-  //       location: (await axios.post(`http://localhost:5000/graphql`, {
-  //         query
-  //       })).data.data.getLocation
-  //     };
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      complete: false
+    };
+  }
   render() {
-    console.log(this.props);
+    const query = gql`
+      query location($id: String!) {
+        getLocation(id: $id) {
+          name
+          latitude
+          longitude
+          floorplan
+          district
+          active
+          height
+          width
+          comments {
+            id
+            content
+            author
+            x
+            y
+            complete
+            created_at
+            updated_at
+          }
+        }
+      }
+    `;
 
-    const comments = [];
-    const floorplan = "floorplans/D101.png";
-
-    let open = comments.filter(({ complete }) => !complete);
-    let closed = comments.filter(({ complete }) => complete);
+    const props = this.props;
     return (
-      <Layout title={this.props.id}>
-        <Card>
-          <img
-            style={{ maxWidth: "80%" }}
-            src={
-              `https://s3.us-east-2.amazonaws.com/floorplans-uploads/` +
-              floorplan
+      <Layout title={props.url.query.id}>
+        <Query query={query} variables={{ id: props.url.query.id }}>
+          {({ loading, error, data }) => {
+            if (loading) return <p>Loading</p>;
+            if (error) {
+              console.log(error);
+              return <p>Error</p>;
             }
-          />
-          <CardText>{JSON.stringify(open)}</CardText>
-          <Comments />
-          <Link href="/fake">Fake</Link>
-        </Card>
+            const open = data.getLocation.comments.filter(
+              ({ complete }) => !complete
+            );
+            const closed = data.getLocation.comments.filter(
+              ({ complete }) => complete
+            );
+            const displayedComments = this.state.complete ? closed : open;
+
+            return (
+              <React.Fragment>
+                <Card style={{ maxWidth: "80%", margin: "0 auto" }}>
+                  <div id="floorplan" style={{ position: "relative" }}>
+                    <img
+                      style={{ maxWidth: "100%" }}
+                      src={
+                        `https://s3.us-east-2.amazonaws.com/floorplans-uploads/` +
+                        data.getLocation.floorplan
+                      }
+                    />
+                    <Markers data={displayedComments} />
+                  </div>
+                </Card>
+                <Tabs>
+                  <Tab
+                    label={`Open (${open.length})`}
+                    onActive={() => {
+                      this.setState({ complete: false });
+                    }}
+                  />
+
+                  <Tab
+                    label={`Recently Completed (${closed.length})`}
+                    onActive={() => {
+                      this.setState({ complete: true });
+                    }}
+                  />
+                </Tabs>
+                <CommentList comments={displayedComments} />
+              </React.Fragment>
+            );
+          }}
+        </Query>
       </Layout>
     );
   }
