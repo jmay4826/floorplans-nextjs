@@ -28,6 +28,7 @@ class Location extends React.Component {
     const query = gql`
       query location($id: String!) {
         getLocation(id: $id) {
+          id
           name
           latitude
           longitude
@@ -52,24 +53,26 @@ class Location extends React.Component {
 
     const props = this.props;
     return (
-      <Layout title={props.url.query.id}>
-        <Query query={query} variables={{ id: props.url.query.id }}>
-          {({ loading, error, data }) => {
-            if (loading) return <p>Loading</p>;
-            if (error) {
-              console.log(error);
-              return <p>Error</p>;
-            }
-            const open = data.getLocation.comments.filter(
-              ({ complete }) => !complete
-            );
-            const closed = data.getLocation.comments.filter(
-              ({ complete }) => complete
-            );
-            const displayedComments = this.state.complete ? closed : open;
+      <Query query={query} variables={{ id: props.url.query.id }}>
+        {({ loading, error, data }) => {
+          if (loading) return <p>Loading</p>;
+          if (error) {
+            console.log(error);
+            return <p>Error</p>;
+          }
+          const open = data.getLocation.comments.filter(
+            ({ complete }) => !complete
+          );
+          const closed = data.getLocation.comments.filter(
+            ({ complete }) => complete
+          );
+          const displayedComments = this.state.complete ? closed : open;
 
-            return (
-              <React.Fragment>
+          return (
+            <React.Fragment>
+              <Layout
+                title={`${data.getLocation.name} (${data.getLocation.id})`}
+              >
                 <Card style={{ maxWidth: "80%", margin: "0 auto" }}>
                   <div id="floorplan" style={{ position: "relative" }}>
                     <img
@@ -98,11 +101,11 @@ class Location extends React.Component {
                   />
                 </Tabs>
                 <CommentList comments={displayedComments} />
-              </React.Fragment>
-            );
-          }}
-        </Query>
-      </Layout>
+              </Layout>
+            </React.Fragment>
+          );
+        }}
+      </Query>
     );
   }
 }
