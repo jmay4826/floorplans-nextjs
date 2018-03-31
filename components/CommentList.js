@@ -4,7 +4,7 @@ import CardHeader from "material-ui/Card/CardHeader";
 
 const CommentList = ({ comments }) => {
   console.log(comments);
-  return comments.map((comment, i) => (
+  return comments.map((comment, i) => [
     <Card key={comment.id}>
       <CardHeader
         title={i + 1}
@@ -15,8 +15,18 @@ const CommentList = ({ comments }) => {
         }
       />
       <CardText>{comment.content}</CardText>
-    </Card>
-  ));
+      <div>{`${comment.replies.length} repl${
+        comment.replies.length === 1 ? "y" : "ies"
+      }`}</div>
+    </Card>,
+    <div>
+      {comment.replies.map(reply => (
+        <Card>
+          <CardText>{reply.content}</CardText>
+        </Card>
+      ))}
+    </div>
+  ]);
 };
 
 export default CommentList;

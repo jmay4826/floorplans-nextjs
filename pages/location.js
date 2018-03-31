@@ -46,6 +46,10 @@ class Location extends React.Component {
             complete
             created_at
             updated_at
+            replies {
+              id
+              content
+            }
           }
         }
       }
@@ -55,7 +59,12 @@ class Location extends React.Component {
     return (
       <Query query={query} variables={{ id: props.url.query.id }}>
         {({ loading, error, data }) => {
-          if (loading) return <p>Loading</p>;
+          if (loading)
+            return (
+              <Layout>
+                <p>Loading</p>
+              </Layout>
+            );
           if (error) {
             console.log(error);
             return <p>Error</p>;
@@ -76,6 +85,7 @@ class Location extends React.Component {
                 <Card style={{ maxWidth: "80%", margin: "0 auto" }}>
                   <div id="floorplan" style={{ position: "relative" }}>
                     <img
+                      onClick={e => console.log(e.clientX, e.clientY)}
                       style={{ maxWidth: "100%" }}
                       src={
                         `https://s3.us-east-2.amazonaws.com/floorplans-uploads/` +
