@@ -5,7 +5,7 @@ import CardHeader from "material-ui/Card/CardHeader";
 const CommentList = ({ comments }) => {
   console.log(comments);
   return comments.map((comment, i) => (
-    <Card>
+    <Card key={comment.id}>
       <CardHeader
         title={i + 1}
         subtitle={
