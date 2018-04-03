@@ -14,39 +14,10 @@ import Layout from "../components/Layout";
 import FlatButton from "material-ui/FlatButton";
 import List from "material-ui/List";
 
+import { GET_LOCATION } from "../graphql/queries";
 import CommentList from "../components/CommentList";
 import Markers from "../components/Markers";
 import AddCommentDialog from "../components/AddCommentDialog";
-
-export const GET_LOCATION = gql`
-  query getLocation($id: String!) {
-    getLocation(id: $id) {
-      id
-      name
-      latitude
-      longitude
-      floorplan
-      district
-      active
-      height
-      width
-      comments {
-        id
-        content
-        author
-        x
-        y
-        complete
-        created_at
-        updated_at
-        replies {
-          id
-          content
-        }
-      }
-    }
-  }
-`;
 
 class Location extends React.Component {
   constructor(props) {

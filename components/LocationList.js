@@ -45,5 +45,4 @@ const LocationList = () => {
   );
 };
 
-// export default TestComponent;
 export default LocationList;
