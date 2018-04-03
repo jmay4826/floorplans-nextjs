@@ -19,7 +19,7 @@ const SubmitComment = props => (
               id: Math.random(),
               complete: false,
               updated_at: null,
-              created_at: new Date().toDateString,
+              created_at: new Date().toDateString(),
               replies: [],
               __typename: 'Comment'
             }

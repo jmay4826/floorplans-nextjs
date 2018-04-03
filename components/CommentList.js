@@ -1,14 +1,14 @@
-import React from "react";
-import Card, { CardText } from "material-ui/Card";
-import CardHeader from "material-ui/Card/CardHeader";
+import React from 'react';
+import Card, { CardText } from 'material-ui/Card';
+import CardHeader from 'material-ui/Card/CardHeader';
 
-const CommentList = ({ comments }) => {
+const CommentList = ({ comments }) =>
   // console.log(comments);
-  return comments.map((comment, i) => (
+  comments.map((comment, i) => (
     <React.Fragment key={comment.id}>
       <Card key={comment.id}>
         <CardHeader
-          title={i + 1}
+          title={`${comment.id < 1 ? 'Saving...' : ''} ${i + 1}`}
           subtitle={
             comment.complete
               ? `Completed ${comment.updated_at} by ${comment.completed_by}`
@@ -30,6 +30,4 @@ const CommentList = ({ comments }) => {
       </div>
     </React.Fragment>
   ));
-};
-
 export default CommentList;
