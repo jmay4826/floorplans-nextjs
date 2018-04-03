@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "next/router";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 
@@ -26,20 +27,19 @@ const mutation = gql`
     }
   }
 `;
+
 const SubmitAction = props => (
   <Mutation
     mutation={mutation}
     update={(cache, response) => {
       const cached = cache.readQuery({
         query: GET_LOCATION,
-        variables: { id: "D101" }
+        variables: { id: props.id }
       });
-      console.log("-----cached-----", cached);
-      console.log("-----response-----", response);
-
+      console.log(props);
       cache.writeQuery({
         query: GET_LOCATION,
-        variables: { id: "D101" },
+        variables: { id: props.id },
         data: {
           getLocation: {
             ...cached.getLocation,
@@ -58,6 +58,7 @@ const SubmitAction = props => (
             mutate({
               variables: { input: props.input }
             });
+            props.handleClose();
           }}
         >
           Submit
@@ -74,11 +75,12 @@ const CancelAction = props => (
 class AddCommentDialog extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       x: props.x,
       y: props.y,
       content: "",
-      location: "D101"
+      location: props.id
     };
   }
 
