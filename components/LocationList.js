@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import FlatButton from "material-ui/FlatButton";
 
-const query = gql`
+const GET_LOCATIONS_BY_USER = gql`
   query {
     getUser {
       locations {
@@ -18,7 +18,7 @@ const query = gql`
 
 const LocationList = () => {
   return (
-    <Query query={query}>
+    <Query query={GET_LOCATIONS_BY_USER}>
       {({ loading, error, data }) => {
         if (loading) return <p>Loading</p>;
         if (error) return <p>Error</p>;

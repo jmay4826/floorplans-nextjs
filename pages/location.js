@@ -16,48 +16,56 @@ import List from "material-ui/List";
 
 import CommentList from "../components/CommentList";
 import Markers from "../components/Markers";
+import AddCommentDialog from "../components/AddCommentDialog";
+
+export const GET_LOCATION = gql`
+  query getLocation($id: String!) {
+    getLocation(id: $id) {
+      id
+      name
+      latitude
+      longitude
+      floorplan
+      district
+      active
+      height
+      width
+      comments {
+        id
+        content
+        author
+        x
+        y
+        complete
+        created_at
+        updated_at
+        replies {
+          id
+          content
+        }
+      }
+    }
+  }
+`;
 
 class Location extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      complete: false
+      complete: false,
+      open: false,
+      x: 0,
+      y: 0
     };
   }
-  render() {
-    const query = gql`
-      query location($id: String!) {
-        getLocation(id: $id) {
-          id
-          name
-          latitude
-          longitude
-          floorplan
-          district
-          active
-          height
-          width
-          comments {
-            id
-            content
-            author
-            x
-            y
-            complete
-            created_at
-            updated_at
-            replies {
-              id
-              content
-            }
-          }
-        }
-      }
-    `;
 
+  handleClose = () => this.setState({ open: false, x: 0, y: 0 });
+  handleSubmit = () => this.handleClose();
+
+  render() {
     const props = this.props;
     return (
-      <Query query={query} variables={{ id: props.url.query.id }}>
+      <Query query={GET_LOCATION} variables={{ id: props.url.query.id }}>
         {({ loading, error, data }) => {
           if (loading)
             return (
@@ -69,6 +77,7 @@ class Location extends React.Component {
             console.log(error);
             return <p>Error</p>;
           }
+          console.log(data);
           const open = data.getLocation.comments.filter(
             ({ complete }) => !complete
           );
@@ -85,7 +94,13 @@ class Location extends React.Component {
                 <Card style={{ maxWidth: "80%", margin: "0 auto" }}>
                   <div id="floorplan" style={{ position: "relative" }}>
                     <img
-                      onClick={e => console.log(e.clientX, e.clientY)}
+                      onClick={e =>
+                        this.setState({
+                          open: true,
+                          x: e.clientX,
+                          y: e.clientY
+                        })
+                      }
                       style={{ maxWidth: "100%" }}
                       src={
                         `https://s3.us-east-2.amazonaws.com/floorplans-uploads/` +
@@ -95,6 +110,14 @@ class Location extends React.Component {
                     <Markers data={displayedComments} />
                   </div>
                 </Card>
+                <AddCommentDialog
+                  open={this.state.open}
+                  x={this.state.x}
+                  y={this.state.y}
+                  id={data.getLocation.id}
+                  handleClose={this.handleClose}
+                  handleSubmit={this.handleSubmit}
+                />
                 <Tabs>
                   <Tab
                     label={`Open (${open.length})`}
