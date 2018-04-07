@@ -1,23 +1,18 @@
-import axios from "axios";
-import Router from "next/router";
-import Link from "next/link";
-import gql from "graphql-tag";
-import { Query } from "react-apollo";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Query } from 'react-apollo';
 
-import TextField from "material-ui/TextField";
-import Card, { CardText, CardMedia } from "material-ui/Card";
-import Tabs, { Tab } from "material-ui/Tabs";
+import Card from 'material-ui/Card';
+import Tabs, { Tab } from 'material-ui/Tabs';
 
-import withMui from "../lib/withMui";
-import withData from "../lib/withData";
-import Layout from "../components/Layout";
-import FlatButton from "material-ui/FlatButton";
-import List from "material-ui/List";
+import withMui from '../lib/withMui';
+import withData from '../lib/withData';
+import Layout from '../components/Layout';
 
-import { GET_LOCATION } from "../graphql/queries";
-import CommentList from "../components/CommentList";
-import Markers from "../components/Markers";
-import AddCommentDialog from "../components/AddCommentDialog";
+import { GET_LOCATION } from '../graphql/queries';
+import CommentList from '../components/CommentList';
+import Markers from '../components/Markers';
+import AddCommentDialog from '../components/AddCommentDialog';
 
 class Location extends React.Component {
   constructor(props) {
@@ -34,37 +29,34 @@ class Location extends React.Component {
   handleSubmit = () => this.handleClose();
 
   render() {
-    const props = this.props;
     return (
-      <Query query={GET_LOCATION} variables={{ id: props.url.query.id }}>
-        {({ loading, error, data }) => {
-          if (loading)
+      <Query query={GET_LOCATION} variables={{ id: this.props.url.query.id }}>
+        {({ loading, error, data: { getLocation } }) => {
+          if (loading) {
             return (
               <Layout>
                 <p>Loading</p>
               </Layout>
             );
+          }
           if (error) {
             console.log(error);
             return <p>Error</p>;
           }
-          console.log(data);
-          const open = data.getLocation.comments.filter(
-            ({ complete }) => !complete
-          );
-          const closed = data.getLocation.comments.filter(
-            ({ complete }) => complete
-          );
+
+          const open = getLocation.comments.filter(({ complete }) => !complete);
+          const closed = getLocation.comments.filter(({ complete }) => complete);
           const displayedComments = this.state.complete ? closed : open;
 
           return (
             <React.Fragment>
-              <Layout
-                title={`${data.getLocation.name} (${data.getLocation.id})`}
-              >
-                <Card style={{ maxWidth: "80%", margin: "0 auto" }}>
-                  <div id="floorplan" style={{ position: "relative" }}>
+              <Layout title={`${getLocation.name} (${getLocation.id})`}>
+                <Card style={{ maxWidth: '80%', margin: '0 auto' }}>
+                  <div id="floorplan" style={{ position: 'relative' }}>
+                    {/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */}
+                    {/* eslint-disable jsx-a11y/click-events-have-key-events */}
                     <img
+                      alt="Floorplan"
                       onClick={e =>
                         this.setState({
                           open: true,
@@ -72,12 +64,13 @@ class Location extends React.Component {
                           y: e.clientY
                         })
                       }
-                      style={{ maxWidth: "100%" }}
-                      src={
-                        `https://s3.us-east-2.amazonaws.com/floorplans-uploads/` +
-                        data.getLocation.floorplan
-                      }
+                      style={{ maxWidth: '100%' }}
+                      src={`https://s3.us-east-2.amazonaws.com/floorplans-uploads/${
+                        getLocation.floorplan
+                      }`}
                     />
+                    {/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */}
+                    {/* eslint-disable jsx-a11y/click-events-have-key-events */}
                     <Markers data={displayedComments} />
                   </div>
                 </Card>
@@ -85,7 +78,7 @@ class Location extends React.Component {
                   open={this.state.open}
                   x={this.state.x}
                   y={this.state.y}
-                  id={data.getLocation.id}
+                  id={getLocation.id}
                   handleClose={this.handleClose}
                   handleSubmit={this.handleSubmit}
                 />
@@ -113,5 +106,9 @@ class Location extends React.Component {
     );
   }
 }
+
+Location.propTypes = {
+  url: PropTypes.object
+};
 
 export default withData(withMui(Location));

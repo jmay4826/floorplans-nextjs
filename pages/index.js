@@ -1,17 +1,16 @@
-import axios from "axios";
-import gql from "graphql-tag";
-import Link from "next/link";
+import React from 'react';
+import Link from 'next/link';
 
-import withMui from "../lib/withMui";
-import withData from "../lib/withData";
-import Layout from "../components/Layout";
+import withMui from '../lib/withMui';
+import withData from '../lib/withData';
+import Layout from '../components/Layout';
 
 class Index extends React.Component {
   render() {
     return (
       <Layout>
-        <Link href="/login">
-          <a>Login</a>
+        <Link prefetch href="/login">
+          <a href="/login">Login</a>
         </Link>
       </Layout>
     );
@@ -19,4 +18,3 @@ class Index extends React.Component {
 }
 
 export default withData(withMui(Index));
-// export default withMui(Index);

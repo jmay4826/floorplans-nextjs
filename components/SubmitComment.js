@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Mutation, Query } from 'react-apollo';
 
 import FlatButton from 'material-ui/FlatButton';
@@ -46,23 +47,33 @@ const SubmitComment = props => (
             });
           }}
         >
-          {(submitComment, { error, loading }) => (
-            <FlatButton
-              primary
-              onClick={() => {
-                submitComment({
-                  variables: { input: { ...newComment, __typename: undefined } }
-                });
-                props.handleClose();
-              }}
-            >
-              Submit
-            </FlatButton>
-          )}
+          {(submitComment, { error, loading }) => {
+            if (error) return <p>Error</p>;
+            if (loading) return <p>Loading</p>;
+            return (
+              <FlatButton
+                primary
+                onClick={() => {
+                  submitComment({
+                    variables: {
+                      input: { ...newComment, __typename: undefined }
+                    }
+                  });
+                  props.handleClose();
+                }}
+              >
+                Submit
+              </FlatButton>
+            );
+          }}
         </Mutation>
       );
     }}
   </Query>
 );
+
+SubmitComment.propTypes = {
+  handleClose: PropTypes.func
+};
 
 export default SubmitComment;

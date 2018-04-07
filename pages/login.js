@@ -1,14 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import Router from 'next/router';
-import Link from 'next/link';
 
 import TextField from 'material-ui/TextField';
 import Card, { CardText } from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
 
 import withMui from '../lib/withMui';
 import Layout from '../components/Layout';
-import FlatButton from 'material-ui/FlatButton';
 
 class Index extends React.Component {
   constructor(props) {

@@ -1,15 +1,14 @@
-import { Fragment } from "react";
-import Head from "next/head";
-import { Toolbar, ToolbarGroup, ToolbarTitle } from "material-ui/Toolbar";
-import Menu from "material-ui/svg-icons/navigation/menu";
-import AppBar from "material-ui/AppBar";
-import Drawer from "material-ui/Drawer";
-import MenuItem from "material-ui/MenuItem";
-import Store from "material-ui/svg-icons/action/store";
-import InsertChart from "material-ui/svg-icons/editor/insert-chart";
-import ExitToApp from "material-ui/svg-icons/action/exit-to-app";
-import Divider from "material-ui/Divider";
-import Link from "next/link";
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
+import Head from 'next/head';
+import AppBar from 'material-ui/AppBar';
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
+import Store from 'material-ui/svg-icons/action/store';
+import InsertChart from 'material-ui/svg-icons/editor/insert-chart';
+import ExitToApp from 'material-ui/svg-icons/action/exit-to-app';
+import Divider from 'material-ui/Divider';
+import Link from 'next/link';
 
 class Layout extends React.Component {
   constructor(props) {
@@ -23,7 +22,7 @@ class Layout extends React.Component {
   closeDrawer = () => this.setState({ open: false });
 
   render() {
-    const { title = "Store Manager" } = this.props;
+    const { title = 'Store Manager' } = this.props;
     return (
       <Fragment>
         <Head>
@@ -33,11 +32,13 @@ class Layout extends React.Component {
             content="width=device-width, initial-scale=1.0"
           />
         </Head>
-        <style jsx global>{`
-          body {
-            margin: 0;
-          }
-        `}</style>
+        <style jsx global>
+          {`
+            body {
+              margin: 0;
+            }
+          `}
+        </style>
 
         <AppBar title={title} onLeftIconButtonClick={this.openDrawer} />
         <Drawer
@@ -45,7 +46,7 @@ class Layout extends React.Component {
           docked={false}
           onRequestChange={open => this.setState({ open })}
         >
-          <AppBar title={"Menu"} showMenuIconButton={false} />
+          <AppBar title="Menu" showMenuIconButton={false} />
           <Link prefetch href="/locations">
             <MenuItem
               onClick={this.closeDrawer}
@@ -66,4 +67,10 @@ class Layout extends React.Component {
     );
   }
 }
+
+Layout.propTypes = {
+  children: PropTypes.node,
+  title: PropTypes.string
+};
+
 export default Layout;
