@@ -36,11 +36,16 @@ class Layout extends React.Component {
           {`
             body {
               margin: 0;
+              padding-top: 70px;
             }
           `}
         </style>
 
-        <AppBar title={title} onLeftIconButtonClick={this.openDrawer} />
+        <AppBar
+          title={title}
+          style={{ position: 'fixed', top: 0 }}
+          onLeftIconButtonClick={this.openDrawer}
+        />
         <Drawer
           open={this.state.open}
           docked={false}

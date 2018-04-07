@@ -52,7 +52,10 @@ class Location extends React.Component {
             <React.Fragment>
               <Layout title={`${getLocation.name} (${getLocation.id})`}>
                 <Card style={{ maxWidth: '80%', margin: '0 auto' }}>
-                  <div id="floorplan" style={{ position: 'relative' }}>
+                  <div
+                    id="floorplan"
+                    style={{ position: 'relative', textAlign: 'center' }}
+                  >
                     {/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */}
                     {/* eslint-disable jsx-a11y/click-events-have-key-events */}
                     <img
@@ -64,7 +67,7 @@ class Location extends React.Component {
                           y: e.clientY
                         })
                       }
-                      style={{ maxWidth: '100%' }}
+                      style={{ maxWidth: '100%', maxHeight: '60vh' }}
                       src={`https://s3.us-east-2.amazonaws.com/floorplans-uploads/${
                         getLocation.floorplan
                       }`}
