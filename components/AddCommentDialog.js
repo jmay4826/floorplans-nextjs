@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import { Mutation } from 'react-apollo';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 
 import SubmitComment from './SubmitComment';
 import CancelComment from './CancelComment';
+import { NEW_COMMENT } from '../graphql/mutations';
 
 const AddCommentDialog = ({ open, handleClose }) => (
   <Dialog
@@ -18,12 +21,18 @@ const AddCommentDialog = ({ open, handleClose }) => (
     ]}
   >
     <input type="file" />
-    <TextField
-      style={{ width: '100%' }}
-      hintText="Description"
-      multiLine={true}
-      onChange={e => console.log('This will be a mutation', e)}
-    />
+    <Mutation mutation={NEW_COMMENT}>
+      {newComment => (
+        <TextField
+          style={{ width: '100%' }}
+          hintText="Description"
+          multiLine={true}
+          onChange={e =>
+            newComment({ variables: { input: { content: e.target.value } } })
+          }
+        />
+      )}
+    </Mutation>
   </Dialog>
 );
 
