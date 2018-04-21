@@ -15,14 +15,17 @@ import Markers from "../components/Markers";
 import AddCommentDialog from "../components/AddCommentDialog";
 import { ApolloCache } from "apollo-cache";
 
+const calculatePosition = e => ({
+  x: (e.clientX - e.target.x) / e.target.width * 100,
+  y: (e.clientY - e.target.y) / e.target.height * 100
+});
+
 class Location extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       complete: false,
-      open: false,
-      x: 0,
-      y: 0
+      open: false
     };
   }
 
@@ -33,13 +36,7 @@ class Location extends React.Component {
     return (
       <Query query={GET_LOCATION} variables={{ id: this.props.url.query.id }}>
         {({ loading, error, data: { getLocation } }) => {
-          if (loading) {
-            return (
-              <Layout>
-                <p>Loading</p>
-              </Layout>
-            );
-          }
+          if (loading) return <div>Loading</div>;
           if (error) {
             console.log(error);
             return <p>Error</p>;
@@ -80,14 +77,8 @@ class Location extends React.Component {
                                 newComment: {
                                   id: "NewComment:",
                                   open: true,
-                                  x:
-                                    (e.clientX - e.target.x) /
-                                    e.target.width *
-                                    100,
-                                  y:
-                                    (e.clientY - e.target.y) /
-                                    e.target.height *
-                                    100,
+                                  location: getLocation.id,
+                                  ...calculatePosition(e),
                                   __typename: "NewComment"
                                 }
                               }
@@ -108,9 +99,6 @@ class Location extends React.Component {
                     </Paper>
                     <AddCommentDialog
                       open={this.state.open}
-                      x={this.state.x}
-                      y={this.state.y}
-                      id={getLocation.id}
                       handleClose={this.handleClose}
                       handleSubmit={this.handleSubmit}
                     />

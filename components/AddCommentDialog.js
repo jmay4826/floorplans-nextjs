@@ -37,7 +37,6 @@ const AddCommentDialog = ({ open, handleClose }) => (
                   data: {
                     newComment: {
                       id: `NewComment:`,
-                      location: "D101",
                       content: e.target.value,
                       __typename: "NewComment"
                     }
