@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { Mutation, ApolloConsumer, Query } from 'react-apollo';
-import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
+import { Mutation, ApolloConsumer, Query } from "react-apollo";
+import Dialog from "material-ui/Dialog";
+import TextField from "material-ui/TextField";
 
-import SubmitComment from './SubmitComment';
-import CancelComment from './CancelComment';
-import { NEW_COMMENT } from '../graphql/mutations';
-import { GET_NEW_COMMENT } from '../graphql/queries';
+import SubmitComment from "./SubmitComment";
+import CancelComment from "./CancelComment";
+import { NEW_COMMENT } from "../graphql/mutations";
+import { GET_NEW_COMMENT } from "../graphql/queries";
 
 const AddCommentDialog = ({ open, handleClose }) => (
   <Dialog
@@ -29,16 +29,17 @@ const AddCommentDialog = ({ open, handleClose }) => (
           <div>
             <p>Existing: {JSON.stringify(data)}</p>
             <TextField
-              style={{ width: '100%' }}
+              style={{ width: "100%" }}
               hintText="Description"
               multiLine={true}
               onChange={e => {
                 client.writeData({
                   data: {
                     newComment: {
-                      id: `NewComment:${data.id || ''}`,
+                      id: `NewComment:`,
+                      location: "D101",
                       content: e.target.value,
-                      __typename: 'NewComment'
+                      __typename: "NewComment"
                     }
                   }
                 });

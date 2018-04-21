@@ -1,6 +1,7 @@
-import gql from 'graphql-tag';
+// @flow
+import gql from "graphql-tag";
 
-export const GET_LOCATION = gql`
+export const GET_LOCATION: Object = gql`
   query getLocation($id: String!) {
     getLocation(id: $id) {
       id
@@ -30,10 +31,11 @@ export const GET_LOCATION = gql`
   }
 `;
 
-export const GET_NEW_COMMENT = gql`
+export const GET_NEW_COMMENT: Object = gql`
   {
     newComment @client {
       id
+      location
       content
       x
       y

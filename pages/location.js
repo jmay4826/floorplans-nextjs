@@ -1,19 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Query, ApolloConsumer } from 'react-apollo';
+import React from "react";
+import PropTypes from "prop-types";
+import { Query, ApolloConsumer } from "react-apollo";
 
-import Card from 'material-ui/Card';
-import Tabs, { Tab } from 'material-ui/Tabs';
+import Paper from "material-ui/Card";
+import Tabs, { Tab } from "material-ui/Tabs";
 
-import withMui from '../lib/withMui';
-import withData from '../lib/withData';
-import Layout from '../components/Layout';
+import withMui from "../lib/withMui";
+import withData from "../lib/withData";
+import Layout from "../components/Layout";
 
-import { GET_LOCATION, GET_NEW_COMMENT } from '../graphql/queries';
-import CommentList from '../components/CommentList';
-import Markers from '../components/Markers';
-import AddCommentDialog from '../components/AddCommentDialog';
-import { ApolloCache } from 'apollo-cache';
+import { GET_LOCATION, GET_NEW_COMMENT } from "../graphql/queries";
+import CommentList from "../components/CommentList";
+import Markers from "../components/Markers";
+import AddCommentDialog from "../components/AddCommentDialog";
+import { ApolloCache } from "apollo-cache";
 
 class Location extends React.Component {
   constructor(props) {
@@ -46,7 +46,9 @@ class Location extends React.Component {
           }
 
           const open = getLocation.comments.filter(({ complete }) => !complete);
-          const closed = getLocation.comments.filter(({ complete }) => complete);
+          const closed = getLocation.comments.filter(
+            ({ complete }) => complete
+          );
           const displayedComments = this.state.complete ? closed : open;
 
           return (
@@ -54,10 +56,19 @@ class Location extends React.Component {
               {({ data, client }) => (
                 <React.Fragment>
                   <Layout title={`${getLocation.name} (${getLocation.id})`}>
-                    <Card style={{ maxWidth: '80%', margin: '0 auto' }}>
+                    <Paper
+                      style={{
+                        maxWidth: "80%",
+                        margin: "0 auto",
+                        textAlign: "center"
+                      }}
+                    >
                       <div
                         id="floorplan"
-                        style={{ position: 'relative', textAlign: 'center' }}
+                        style={{
+                          position: "relative",
+                          display: "inline-block"
+                        }}
                       >
                         {/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */}
                         {/* eslint-disable jsx-a11y/click-events-have-key-events */}
@@ -67,11 +78,17 @@ class Location extends React.Component {
                             client.writeData({
                               data: {
                                 newComment: {
-                                  id: 'NewComment:',
+                                  id: "NewComment:",
                                   open: true,
-                                  x: e.clientX,
-                                  y: e.clientY,
-                                  __typename: 'NewComment'
+                                  x:
+                                    (e.clientX - e.target.x) /
+                                    e.target.width *
+                                    100,
+                                  y:
+                                    (e.clientY - e.target.y) /
+                                    e.target.height *
+                                    100,
+                                  __typename: "NewComment"
                                 }
                               }
                             });
@@ -79,7 +96,7 @@ class Location extends React.Component {
                               open: true
                             });
                           }}
-                          style={{ maxWidth: '100%', maxHeight: '60vh' }}
+                          style={{ maxWidth: "100%", maxHeight: "60vh" }}
                           src={`https://s3.us-east-2.amazonaws.com/floorplans-uploads/${
                             getLocation.floorplan
                           }`}
@@ -88,7 +105,7 @@ class Location extends React.Component {
                         {/* eslint-disable jsx-a11y/click-events-have-key-events */}
                         <Markers data={displayedComments} />
                       </div>
-                    </Card>
+                    </Paper>
                     <AddCommentDialog
                       open={this.state.open}
                       x={this.state.x}

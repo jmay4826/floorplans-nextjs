@@ -1,14 +1,13 @@
-// @flow
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Mutation, Query } from 'react-apollo';
+import React from "react";
+import PropTypes from "prop-types";
+import { Mutation, Query } from "react-apollo";
 
-import FlatButton from 'material-ui/FlatButton';
+import FlatButton from "material-ui/FlatButton";
 
-import { ADD_COMMENT } from '../graphql/mutations';
-import { GET_LOCATION, GET_NEW_COMMENT } from '../graphql/queries';
+import { ADD_COMMENT } from "../graphql/mutations";
+import { GET_LOCATION, GET_NEW_COMMENT } from "../graphql/queries";
 
-const SubmitComment = props => (
+const SubmitComment = (props: Object) => (
   <Query query={GET_NEW_COMMENT}>
     {({ data: { newComment } }) => {
       console.log(newComment);
@@ -23,7 +22,7 @@ const SubmitComment = props => (
               updated_at: null,
               created_at: new Date().toDateString(),
               replies: [],
-              __typename: 'Comment'
+              __typename: "Comment"
             }
           }}
           update={(cache, response) => {
@@ -57,7 +56,11 @@ const SubmitComment = props => (
                 onClick={() => {
                   submitComment({
                     variables: {
-                      input: { ...newComment, __typename: undefined }
+                      input: {
+                        ...newComment,
+                        id: undefined,
+                        __typename: undefined
+                      }
                     }
                   });
                   props.handleClose();
