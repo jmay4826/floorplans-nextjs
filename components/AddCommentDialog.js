@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Mutation } from 'react-apollo';
+import { Mutation, ApolloConsumer, Query } from 'react-apollo';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 
 import SubmitComment from './SubmitComment';
 import CancelComment from './CancelComment';
 import { NEW_COMMENT } from '../graphql/mutations';
+import { GET_NEW_COMMENT } from '../graphql/queries';
 
 const AddCommentDialog = ({ open, handleClose }) => (
   <Dialog
@@ -21,18 +22,32 @@ const AddCommentDialog = ({ open, handleClose }) => (
     ]}
   >
     <input type="file" />
-    <Mutation mutation={NEW_COMMENT}>
-      {newComment => (
-        <TextField
-          style={{ width: '100%' }}
-          hintText="Description"
-          multiLine={true}
-          onChange={e =>
-            newComment({ variables: { input: { content: e.target.value } } })
-          }
-        />
-      )}
-    </Mutation>
+    <Query query={GET_NEW_COMMENT}>
+      {({ data, client }) => {
+        console.log(data);
+        return (
+          <div>
+            <p>Existing: {JSON.stringify(data)}</p>
+            <TextField
+              style={{ width: '100%' }}
+              hintText="Description"
+              multiLine={true}
+              onChange={e => {
+                client.writeData({
+                  data: {
+                    newComment: {
+                      id: `NewComment:${data.id || ''}`,
+                      content: e.target.value,
+                      __typename: 'NewComment'
+                    }
+                  }
+                });
+              }}
+            />
+          </div>
+        );
+      }}
+    </Query>
   </Dialog>
 );
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Query } from 'react-apollo';
+import { Query, ApolloConsumer } from 'react-apollo';
 
 import Card from 'material-ui/Card';
 import Tabs, { Tab } from 'material-ui/Tabs';
@@ -9,10 +9,11 @@ import withMui from '../lib/withMui';
 import withData from '../lib/withData';
 import Layout from '../components/Layout';
 
-import { GET_LOCATION } from '../graphql/queries';
+import { GET_LOCATION, GET_NEW_COMMENT } from '../graphql/queries';
 import CommentList from '../components/CommentList';
 import Markers from '../components/Markers';
 import AddCommentDialog from '../components/AddCommentDialog';
+import { ApolloCache } from 'apollo-cache';
 
 class Location extends React.Component {
   constructor(props) {
@@ -49,60 +50,73 @@ class Location extends React.Component {
           const displayedComments = this.state.complete ? closed : open;
 
           return (
-            <React.Fragment>
-              <Layout title={`${getLocation.name} (${getLocation.id})`}>
-                <Card style={{ maxWidth: '80%', margin: '0 auto' }}>
-                  <div
-                    id="floorplan"
-                    style={{ position: 'relative', textAlign: 'center' }}
-                  >
-                    {/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */}
-                    {/* eslint-disable jsx-a11y/click-events-have-key-events */}
-                    <img
-                      alt="Floorplan"
-                      onClick={e =>
-                        this.setState({
-                          open: true,
-                          x: e.clientX,
-                          y: e.clientY
-                        })
-                      }
-                      style={{ maxWidth: '100%', maxHeight: '60vh' }}
-                      src={`https://s3.us-east-2.amazonaws.com/floorplans-uploads/${
-                        getLocation.floorplan
-                      }`}
+            <Query query={GET_NEW_COMMENT}>
+              {({ data, client }) => (
+                <React.Fragment>
+                  <Layout title={`${getLocation.name} (${getLocation.id})`}>
+                    <Card style={{ maxWidth: '80%', margin: '0 auto' }}>
+                      <div
+                        id="floorplan"
+                        style={{ position: 'relative', textAlign: 'center' }}
+                      >
+                        {/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */}
+                        {/* eslint-disable jsx-a11y/click-events-have-key-events */}
+                        <img
+                          alt="Floorplan"
+                          onClick={e => {
+                            client.writeData({
+                              data: {
+                                newComment: {
+                                  id: 'NewComment:',
+                                  open: true,
+                                  x: e.clientX,
+                                  y: e.clientY,
+                                  __typename: 'NewComment'
+                                }
+                              }
+                            });
+                            this.setState({
+                              open: true
+                            });
+                          }}
+                          style={{ maxWidth: '100%', maxHeight: '60vh' }}
+                          src={`https://s3.us-east-2.amazonaws.com/floorplans-uploads/${
+                            getLocation.floorplan
+                          }`}
+                        />
+                        {/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */}
+                        {/* eslint-disable jsx-a11y/click-events-have-key-events */}
+                        <Markers data={displayedComments} />
+                      </div>
+                    </Card>
+                    <AddCommentDialog
+                      open={this.state.open}
+                      x={this.state.x}
+                      y={this.state.y}
+                      id={getLocation.id}
+                      handleClose={this.handleClose}
+                      handleSubmit={this.handleSubmit}
                     />
-                    {/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */}
-                    {/* eslint-disable jsx-a11y/click-events-have-key-events */}
-                    <Markers data={displayedComments} />
-                  </div>
-                </Card>
-                <AddCommentDialog
-                  open={this.state.open}
-                  x={this.state.x}
-                  y={this.state.y}
-                  id={getLocation.id}
-                  handleClose={this.handleClose}
-                  handleSubmit={this.handleSubmit}
-                />
-                <Tabs>
-                  <Tab
-                    label={`Open (${open.length})`}
-                    onActive={() => {
-                      this.setState({ complete: false });
-                    }}
-                  />
+                    <Tabs>
+                      <Tab
+                        label={`Open (${open.length})`}
+                        onActive={() => {
+                          this.setState({ complete: false });
+                        }}
+                      />
 
-                  <Tab
-                    label={`Recently Completed (${closed.length})`}
-                    onActive={() => {
-                      this.setState({ complete: true });
-                    }}
-                  />
-                </Tabs>
-                <CommentList comments={displayedComments} />
-              </Layout>
-            </React.Fragment>
+                      <Tab
+                        label={`Recently Completed (${closed.length})`}
+                        onActive={() => {
+                          this.setState({ complete: true });
+                        }}
+                      />
+                    </Tabs>
+                    <CommentList comments={displayedComments} />
+                  </Layout>
+                </React.Fragment>
+              )}
+            </Query>
           );
         }}
       </Query>

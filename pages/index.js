@@ -1,20 +1,71 @@
 import React from 'react';
-import Link from 'next/link';
+import axios from 'axios';
+import Router from 'next/router';
+
+import TextField from 'material-ui/TextField';
+import Card, { CardText } from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
 
 import withMui from '../lib/withMui';
-import withData from '../lib/withData';
 import Layout from '../components/Layout';
 
 class Index extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: ''
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit() {
+    console.log('submitting');
+    axios
+      .post('http://localhost:5000/auth/login', {
+        username: this.state.username,
+        password: this.state.password
+      })
+      .then(console.log)
+      .catch(console.log);
+    Router.push('/locations');
+  }
+
   render() {
     return (
-      <Layout>
-        <Link prefetch href="/login">
-          <a href="/login">Login</a>
-        </Link>
+      <Layout title="Login">
+        <div>
+          <Card>
+            <CardText>
+              <div>
+                <TextField
+                  hintText="Username"
+                  onChange={e => this.setState({ username: e.target.value })}
+                />
+                <TextField
+                  type="Password"
+                  hintText="Password"
+                  onChange={e => this.setState({ password: e.target.value })}
+                />
+
+                <FlatButton onClick={this.handleSubmit}>Submit</FlatButton>
+              </div>
+            </CardText>
+          </Card>
+        </div>
+        <style jsx>
+          {`
+            div {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              padding: 10px;
+            }
+          `}
+        </style>
       </Layout>
     );
   }
 }
 
-export default withData(withMui(Index));
+export default withMui(Index);
