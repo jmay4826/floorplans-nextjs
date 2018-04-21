@@ -15,10 +15,12 @@ const SubmitComment = (props: Object) => (
         <Mutation
           mutation={ADD_COMMENT}
           optimisticResponse={{
+            __typename: "Mutation",
             addComment: {
               ...newComment,
-              id: Math.random(),
+              id: -1,
               complete: false,
+              author: "none",
               updated_at: null,
               created_at: new Date().toDateString(),
               replies: [],
@@ -26,11 +28,13 @@ const SubmitComment = (props: Object) => (
             }
           }}
           update={(cache, response) => {
-            console.log(response);
+            console.log("response", response);
+
             const cached = cache.readQuery({
               query: GET_LOCATION,
               variables: { id: newComment.location }
             });
+            console.log(cached);
 
             cache.writeQuery({
               query: GET_LOCATION,

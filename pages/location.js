@@ -36,6 +36,7 @@ class Location extends React.Component {
     return (
       <Query query={GET_LOCATION} variables={{ id: this.props.url.query.id }}>
         {({ loading, error, data: { getLocation } }) => {
+          console.log("on locatoinjs", getLocation);
           if (loading) return <div>Loading</div>;
           if (error) {
             console.log(error);
