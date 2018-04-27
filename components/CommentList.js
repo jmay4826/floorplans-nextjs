@@ -6,6 +6,8 @@ import { FlatButton, IconButton, TextField } from "material-ui";
 import Delete from "material-ui/svg-icons/action/delete";
 import Done from "material-ui/svg-icons/action/done";
 
+//helper function for ternaries
+
 const CommentList = ({ comments }) =>
   comments.map((comment, i) => (
     <div
