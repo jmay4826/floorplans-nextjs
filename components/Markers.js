@@ -1,26 +1,11 @@
 import React from 'react';
+import { markers } from '../lib/styles';
 
-const Markers = ({ data }) => data.map((comment, i) => (
-  <div
-    key={comment.id}
-    style={{
-      position: 'absolute',
-      display: 'flex',
-      top: `${comment.y}%`,
-      left: `${comment.x}%`,
-      width: '26px',
-      height: '26px',
-      background: 'rgba(233, 30, 90, 0.8)',
-      borderRadius: '50%',
-      boxShadow: '0 0 10px rgba(0, 0, 0, 0.8)',
-      justifyContent: 'center',
-      alignItems: 'center',
-      color: 'white',
-      transform: 'translate(-13px, -13px)'
-    }}
-  >
-    {i + 1}
-  </div>
-));
+const Markers = ({ data }) =>
+  data.map(({ id, x, y }, i) => (
+    <div key={id} style={markers(x, y)}>
+      {i + 1}
+    </div>
+  ));
 
 export default Markers;
