@@ -1,7 +1,6 @@
 /* eslint-env jest */
 import { shallow } from 'enzyme';
 import React from 'react';
-import renderer from 'react-test-renderer';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton/FlatButton';
 
@@ -30,11 +29,3 @@ describe('Login', () => {
     // TODO
   });
 });
-
-// describe('With Snapshot Testing', () => {
-//   it('App shows "Hello world!"', () => {
-//     const component = renderer.create(<Index />);
-//     const tree = component.toJSON();
-//     expect(tree).toMatchSnapshot();
-//   });
-// });

@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Mutation, Query } from "react-apollo";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Mutation, Query } from 'react-apollo';
 
-import FlatButton from "material-ui/FlatButton";
+import FlatButton from 'material-ui/FlatButton';
 
-import { ADD_COMMENT } from "../graphql/mutations";
-import { GET_LOCATION, GET_NEW_COMMENT } from "../graphql/queries";
+import { ADD_COMMENT } from '../graphql/mutations';
+import { GET_LOCATION, GET_NEW_COMMENT } from '../graphql/queries';
 
 const SubmitComment = (props: Object) => (
   <Query query={GET_NEW_COMMENT}>
@@ -15,20 +15,20 @@ const SubmitComment = (props: Object) => (
         <Mutation
           mutation={ADD_COMMENT}
           optimisticResponse={{
-            __typename: "Mutation",
+            __typename: 'Mutation',
             addComment: {
               ...newComment,
               id: -1,
               complete: false,
-              author: "none",
+              author: 'none',
               updated_at: null,
               created_at: new Date().toDateString(),
               replies: [],
-              __typename: "Comment"
+              __typename: 'Comment'
             }
           }}
           update={(cache, response) => {
-            console.log("response", response);
+            console.log('response', response);
 
             const cached = cache.readQuery({
               query: GET_LOCATION,

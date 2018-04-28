@@ -1,12 +1,8 @@
 /* eslint-env jest */
-import { shallow } from 'enzyme';
+
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { MockedProvider } from 'react-apollo/test-utils';
-import TextField from 'material-ui/TextField';
-import FlatButton from 'material-ui/FlatButton/FlatButton';
-
-import { Login } from '../components/Login';
 import LocationList from '../components/LocationList';
 
 describe('Login', () => {
@@ -32,9 +28,12 @@ describe('Login', () => {
 
 describe('With Snapshot Testing', () => {
   it('App shows "Hello world!"', () => {
-    const component = renderer.create(<MockedProvider>
-      <LocationList />
-    </MockedProvider>);
+    const mocked = (
+      <MockedProvider>
+        <LocationList />
+      </MockedProvider>
+    );
+    const component = renderer.create(mocked);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
