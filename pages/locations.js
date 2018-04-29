@@ -20,10 +20,12 @@ class locations extends Component {
     return (
       <Layout title="Choose a location">
         <div className="container">
-          <Card>
+          <Card style={{ minWidth: '80%' }}>
             <CardText>
               <TextField onChange={this.handleFilter} hintText="Search" />
-              <Locations filter={this.state.filter} />
+              <div>
+                <Locations filter={this.state.filter} />
+              </div>
             </CardText>
           </Card>
           <style jsx>{container}</style>

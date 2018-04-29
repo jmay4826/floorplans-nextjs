@@ -43,3 +43,14 @@ export const GET_NEW_COMMENT = gql`
     }
   }
 `;
+
+export const GET_LOCATIONS_BY_USER = gql`
+  query {
+    getUser {
+      locations {
+        id
+        name
+      }
+    }
+  }
+`;
