@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import Card, { CardText } from 'material-ui/Card';
 
@@ -6,31 +6,31 @@ import withMui from '../lib/withMui';
 import withData from '../lib/withData';
 import Layout from '../components/Layout';
 
-import LocationList from '../components/LocationList';
+import { Locations } from '../components/Locations';
+import { container } from '../lib/styles';
 
-class Locations extends React.Component {
+class locations extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { filter: '' };
+  }
+
+  handleFilter = e => this.setState({ filter: e.target.value });
   render() {
     return (
       <Layout title="Choose a location">
-        <div>
+        <div className="container">
           <Card>
             <CardText>
-              <TextField hintText="Search" />
-              <LocationList />
+              <TextField onChange={this.handleFilter} hintText="Search" />
+              <Locations filter={this.state.filter} />
             </CardText>
           </Card>
-          <style jsx>
-            {`
-              div {
-                margin: 10px auto;
-                max-width: 60%;
-              }
-            `}
-          </style>
+          <style jsx>{container}</style>
         </div>
       </Layout>
     );
   }
 }
 
-export default withData(withMui(Locations));
+export default withData(withMui(locations));

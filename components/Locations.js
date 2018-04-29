@@ -16,31 +16,35 @@ const GET_LOCATIONS_BY_USER = gql`
   }
 `;
 
-const LocationList = () => (
+const Locations = ({ filter }) => (
   <Query query={GET_LOCATIONS_BY_USER}>
     {({ loading, error, data }) => {
       if (loading) return <p>Loading</p>;
       if (error) return <p>Error</p>;
-
+      console.log(filter);
       const { locations } = data.getUser;
       return (
         <div>
-          {locations.map(location => (
-            <Link
-              key={location.id}
-              prefetch
-              href={`/location?id=${location.id}`}
-            >
-              <FlatButton style={{ margin: '5px' }}>
-                {`${location.name}
+          {locations
+            .filter(location =>
+              location.id.indexOf(filter) !== -1 ||
+                location.name.indexOf(filter) !== -1)
+            .map(location => (
+              <Link
+                key={location.id}
+                prefetch
+                href={`/location?id=${location.id}`}
+              >
+                <FlatButton style={{ margin: '5px' }}>
+                  {`${location.name}
             (${location.id})`}
-              </FlatButton>
-            </Link>
-          ))}
+                </FlatButton>
+              </Link>
+            ))}
         </div>
       );
     }}
   </Query>
 );
 
-export default LocationList;
+export { Locations };
