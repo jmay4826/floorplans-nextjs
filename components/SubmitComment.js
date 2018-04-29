@@ -47,8 +47,8 @@ const SubmitComment = props => (
         optimisticResponse={optimisticResponse(newComment)}
         update={(cache, response) => update(cache, response, newComment)}
       >
-        {(submitComment, { error, loading, ...rest }) => {
-          console.log(rest);
+        {(submitComment, { error, loading }) => {
+          
           if (error) return <p>Error</p>;
           if (loading) return <p>Loading</p>;
           return (

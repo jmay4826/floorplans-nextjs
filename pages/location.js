@@ -53,11 +53,10 @@ class Location extends React.Component {
               }) => {
                 if (loading) return <div>Loading</div>;
                 if (error) {
-                  console.log(GET_NEW_COMMENT);
                   console.log(error);
                   return <p>Error</p>;
                 }
-                console.log(data);
+
                 return (
                   <Layout title={`${getLocation.name} (${getLocation.id})`}>
                     <Paper

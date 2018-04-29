@@ -21,34 +21,37 @@ const AddCommentDialog = ({ open, handleClose }) => (
     ]}
   >
     <Query query={GET_NEW_COMMENT}>
-      {({ data, client }) => {
-        console.log('addcommentdialog', data);
-        return (
-          <div>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={e => console.log(e.target.files[0])}
-            />
+      {({ data, client }) => (
+        <div>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={e =>
+              client.writeData({
+                data: {
+                  newComment: { ...data.newComment, image: e.target.files[0] }
+                }
+              })
+            }
+          />
 
-            <TextField
-              style={{ width: '100%' }}
-              hintText="Description"
-              multiLine={true}
-              onChange={e => {
-                client.writeData({
-                  data: {
-                    newComment: {
-                      ...data.newComment,
-                      content: e.target.value
-                    }
+          <TextField
+            style={{ width: '100%' }}
+            hintText="Description"
+            multiLine={true}
+            onChange={e => {
+              client.writeData({
+                data: {
+                  newComment: {
+                    ...data.newComment,
+                    content: e.target.value
                   }
-                });
-              }}
-            />
-          </div>
-        );
-      }}
+                }
+              });
+            }}
+          />
+        </div>
+      )}
     </Query>
   </Dialog>
 );

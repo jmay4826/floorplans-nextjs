@@ -21,7 +21,7 @@ const LocationList = () => (
     {({ loading, error, data }) => {
       if (loading) return <p>Loading</p>;
       if (error) return <p>Error</p>;
-      console.log(data);
+
       const { locations } = data.getUser;
       return (
         <div>
