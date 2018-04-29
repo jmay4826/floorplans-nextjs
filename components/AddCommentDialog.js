@@ -5,7 +5,7 @@ import { Query } from 'react-apollo';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 
-import SubmitComment from './SubmitComment';
+import { SubmitComment } from './SubmitComment';
 import CancelComment from './CancelComment';
 import { GET_NEW_COMMENT } from '../graphql/queries';
 

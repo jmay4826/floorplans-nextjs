@@ -41,13 +41,14 @@ const update = (cache, { data: { addComment } }, { location }) => {
 
 const SubmitComment = props => (
   <Query query={GET_NEW_COMMENT}>
-    {({ data: { newComment } }) => (
+    {({ client, data: { newComment } }) => (
       <Mutation
         mutation={ADD_COMMENT}
         optimisticResponse={optimisticResponse(newComment)}
         update={(cache, response) => update(cache, response, newComment)}
       >
-        {(submitComment, { error, loading }) => {
+        {(submitComment, { error, loading, ...rest }) => {
+          console.log(rest);
           if (error) return <p>Error</p>;
           if (loading) return <p>Loading</p>;
           return (
@@ -58,12 +59,21 @@ const SubmitComment = props => (
                   variables: {
                     input: {
                       ...newComment,
+                      open: undefined,
                       id: undefined,
                       __typename: undefined
                     }
                   }
                 });
-                props.handleClose();
+                client.writeData({
+                  data: {
+                    newComment: {
+                      id: newComment.id,
+                      __typename: 'NewComment',
+                      open: false
+                    }
+                  }
+                });
               }}
             >
               Submit

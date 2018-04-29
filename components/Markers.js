@@ -8,4 +8,4 @@ const Markers = ({ data }) =>
     </div>
   ));
 
-export default Markers;
+export { Markers };

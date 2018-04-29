@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export const GET_LOCATION = gql`
   query getLocation($id: String!) {
@@ -31,8 +31,10 @@ export const GET_LOCATION = gql`
 `;
 
 export const GET_NEW_COMMENT = gql`
-  {
+  query newComment {
     newComment @client {
+      open
+      author
       id
       location
       content
