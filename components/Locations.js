@@ -14,14 +14,13 @@ const Locations = ({ filter }) => (
       if (error) return <p>Error</p>;
 
       const locations = data.getUser.locations
-        .filter(location =>
-          location.id.toLowerCase().includes(filter.toLowerCase()) ||
-            location.name.toLowerCase().includes(filter.toLowerCase()))
-        .map(location => (
-          <Link key={location.id} prefetch href={`/location?id=${location.id}`}>
+        .filter(({ id, name }) =>
+          id.toLowerCase().includes(filter.toLowerCase()) ||
+            name.toLowerCase().includes(filter.toLowerCase()))
+        .map(({ id, name }) => (
+          <Link key={id} prefetch href={`/location?id=${id}`}>
             <FlatButton style={{ margin: '5px' }}>
-              {`${location.name}
-            (${location.id})`}
+              {`${name} (${id})`}
             </FlatButton>
           </Link>
         ));
