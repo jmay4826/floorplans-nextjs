@@ -35,15 +35,13 @@ class Location extends React.Component {
             return <p>Error</p>;
           }
           const {
-            comments: { completed, incomplete },
+            comments: { completed = [], incomplete = [] },
             id = 0,
             name = '',
             floorplan = ''
           } = getLocation;
 
-          const displayedComments = this.state.complete
-            ? completed
-            : incomplete;
+          const markers = this.state.complete ? completed : incomplete;
 
           return (
             <Layout title={`${name} (${id})`}>
@@ -51,7 +49,7 @@ class Location extends React.Component {
                 openDialog={this.openDialog}
                 id={id}
                 floorplan={floorplan}
-                displayedComments={displayedComments}
+                markers={markers}
               />
               <AddCommentDialog
                 open={this.state.open}
@@ -59,7 +57,7 @@ class Location extends React.Component {
               />
               <Tabs>
                 <Tab
-                  label={`Open (${incomplete.length})`}
+                  label={`Incomplete (${incomplete.length})`}
                   onActive={() => {
                     this.setState({ complete: false });
                   }}

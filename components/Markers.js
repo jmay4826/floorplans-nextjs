@@ -1,9 +1,9 @@
 import React from 'react';
-import { markers } from '../lib/styles';
+import styles from '../lib/styles';
 
-const Markers = ({ data }) =>
-  data.map(({ id, x, y }, i) => (
-    <div key={id} style={markers(x, y)}>
+const Markers = ({ markers }) =>
+  markers.map(({ id, x, y }, i) => (
+    <div key={id} style={styles.markers(x, y)}>
       {i + 1}
     </div>
   ));

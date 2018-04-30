@@ -7,7 +7,6 @@ import Paper from 'material-ui/Card';
 import { Markers } from '../components/Markers';
 
 import { GET_NEW_COMMENT } from '../graphql/queries';
-import styles from '../lib/styles';
 
 const getPosition = e => ({
   x: 100 * ((e.clientX - e.target.x) / e.target.width),
@@ -15,7 +14,7 @@ const getPosition = e => ({
 });
 
 const Floorplan = ({
-  id, floorplan, displayedComments, openDialog
+  id, floorplan, markers, openDialog
 }) => (
   <Paper
     style={{
@@ -68,7 +67,7 @@ const Floorplan = ({
       </Query>
       {/* eslint-enable jsx-a11y/no-noninteractive-element-interactions */}
       {/* eslint-enable jsx-a11y/click-events-have-key-events */}
-      <Markers data={displayedComments} />
+      <Markers markers={markers} />
     </div>
   </Paper>
 );
@@ -76,7 +75,7 @@ const Floorplan = ({
 Floorplan.propTypes = {
   id: PropTypes.string,
   floorplan: PropTypes.string,
-  displayedComments: PropTypes.array,
+  markers: PropTypes.array,
   openDialog: PropTypes.func.isRequired
 };
 
