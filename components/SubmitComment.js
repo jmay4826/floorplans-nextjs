@@ -39,7 +39,7 @@ const update = (cache, { data: { addComment } }, { location }) => {
   });
 };
 
-const SubmitComment = props => (
+const SubmitComment = ({ closeDialog }) => (
   <Query query={GET_NEW_COMMENT}>
     {({ client, data: { newComment } }) => (
       <Mutation
@@ -48,7 +48,6 @@ const SubmitComment = props => (
         update={(cache, response) => update(cache, response, newComment)}
       >
         {(submitComment, { error, loading }) => {
-          
           if (error) return <p>Error</p>;
           if (loading) return <p>Loading</p>;
           return (
@@ -59,7 +58,6 @@ const SubmitComment = props => (
                   variables: {
                     input: {
                       ...newComment,
-                      open: undefined,
                       id: undefined,
                       __typename: undefined
                     }
@@ -69,11 +67,15 @@ const SubmitComment = props => (
                   data: {
                     newComment: {
                       id: newComment.id,
-                      __typename: 'NewComment',
-                      open: false
+                      content: '',
+                      x: 0,
+                      y: 0,
+                      location: '',
+                      __typename: 'NewComment'
                     }
                   }
                 });
+                closeDialog();
               }}
             >
               Submit
@@ -86,7 +88,7 @@ const SubmitComment = props => (
 );
 
 SubmitComment.propTypes = {
-  handleClose: PropTypes.func
+  closeDialog: PropTypes.func.isRequired
 };
 
 export { SubmitComment };

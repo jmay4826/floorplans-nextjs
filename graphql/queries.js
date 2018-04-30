@@ -13,17 +13,33 @@ export const GET_LOCATION = gql`
       height
       width
       comments {
-        id
-        content
-        author
-        x
-        y
-        complete
-        created_at
-        updated_at
-        replies {
+        completed {
           id
           content
+          author
+          x
+          y
+          complete
+          created_at
+          updated_at
+          replies {
+            id
+            content
+          }
+        }
+        incomplete {
+          id
+          content
+          author
+          x
+          y
+          complete
+          created_at
+          updated_at
+          replies {
+            id
+            content
+          }
         }
       }
     }
@@ -33,7 +49,6 @@ export const GET_LOCATION = gql`
 export const GET_NEW_COMMENT = gql`
   query newComment {
     newComment @client {
-      open
       author
       id
       location

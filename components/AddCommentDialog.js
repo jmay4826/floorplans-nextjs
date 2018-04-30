@@ -9,15 +9,15 @@ import { SubmitComment } from './SubmitComment';
 import CancelComment from './CancelComment';
 import { GET_NEW_COMMENT } from '../graphql/queries';
 
-const AddCommentDialog = ({ open, handleClose }) => (
+const AddCommentDialog = ({ open, closeDialog }) => (
   <Dialog
     title="Add Comment"
     open={open}
-    onRequestClose={handleClose}
+    onRequestClose={closeDialog}
     autoScrollBodyContent={true}
     actions={[
-      <CancelComment handleClose={handleClose} />,
-      <SubmitComment handleClose={handleClose} />
+      <CancelComment closeDialog={closeDialog} />,
+      <SubmitComment closeDialog={closeDialog} />
     ]}
   >
     <Query query={GET_NEW_COMMENT}>
@@ -58,7 +58,7 @@ const AddCommentDialog = ({ open, handleClose }) => (
 
 AddCommentDialog.propTypes = {
   open: PropTypes.bool.isRequired,
-  handleClose: PropTypes.func.isRequired
+  closeDialog: PropTypes.func.isRequired
 };
 
 export default AddCommentDialog;
