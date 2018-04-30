@@ -7,7 +7,7 @@ import withData from '../lib/withData';
 import Layout from '../components/Layout';
 
 import { Locations } from '../components/Locations';
-import { container } from '../lib/styles';
+import { styles } from '../lib/styles';
 
 class locations extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class locations extends Component {
   render() {
     return (
       <Layout title="Choose a location">
-        <div className="container">
+        <div style={styles.container}>
           <Card style={{ minWidth: '80%' }}>
             <CardText>
               <TextField onChange={this.handleFilter} hintText="Search" />
@@ -28,7 +28,6 @@ class locations extends Component {
               </div>
             </CardText>
           </Card>
-          <style jsx>{container}</style>
         </div>
       </Layout>
     );

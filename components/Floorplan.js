@@ -5,6 +5,7 @@ import { Query } from 'react-apollo';
 import Paper from 'material-ui/Card';
 
 import { Markers } from '../components/Markers';
+import { styles } from '../lib/styles';
 
 import { GET_NEW_COMMENT } from '../graphql/queries';
 
@@ -23,15 +24,7 @@ const Floorplan = ({
       textAlign: 'center'
     }}
   >
-    <div id="floorplan">
-      <style jsx>
-        {`
-          #floorplan {
-            position: relative;
-            display: inline-block;
-          }
-        `}
-      </style>
+    <div id="floorplan" style={styles.floorplan}>
       {/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */}
       {/* eslint-disable jsx-a11y/click-events-have-key-events */}
       <Query query={GET_NEW_COMMENT}>

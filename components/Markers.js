@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../lib/styles';
+import { styles } from '../lib/styles';
 
 const Markers = ({ markers }) =>
   markers.map(({ id, x, y }, i) => (
