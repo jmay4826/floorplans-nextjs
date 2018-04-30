@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Card, { CardText } from 'material-ui/Card';
 import CardHeader from 'material-ui/Card/CardHeader';
@@ -6,9 +6,10 @@ import CardActions from 'material-ui/Card/CardActions';
 import { FlatButton, IconButton, TextField } from 'material-ui';
 import Delete from 'material-ui/svg-icons/action/delete';
 import Done from 'material-ui/svg-icons/action/done';
+
+import { Reply } from './Reply';
 import { styles } from '../lib/styles';
 
-// helper function for ternaries
 const makeTitle = (id, i) => `${id < 1 ? 'Saving...' : ''} ${i + 1}`;
 const makeSubtitle = (complete, updated_at, completed_by, created_at, author) =>
   (complete
@@ -16,6 +17,15 @@ const makeSubtitle = (complete, updated_at, completed_by, created_at, author) =>
     : `Created ${created_at} by ${author}`);
 
 class Comment extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showReplies: false
+    };
+  }
+  toggleReplies = () =>
+    this.setState(({ showReplies }) => ({ showReplies: !showReplies }));
   render() {
     const {
       id,
@@ -44,25 +54,32 @@ class Comment extends Component {
             />
             <CardText>{content}</CardText>
             <CardActions style={styles.actions}>
-              <FlatButton label={`Show Replies (${replies.length})`} />
-              <IconButton>
-                <Delete />
-              </IconButton>
-              <IconButton>
-                <Done />
-              </IconButton>
+              <FlatButton
+                label={`Show Replies (${replies.length})`}
+                onClick={this.toggleReplies}
+              />
+              {!complete && (
+                <Fragment>
+                  <IconButton>
+                    <Delete />
+                  </IconButton>
+                  <IconButton>
+                    <Done />
+                  </IconButton>
+                </Fragment>
+              )}
             </CardActions>
           </Card>
-          <Card style={styles.reply}>
-            <CardText>
-              <TextField hintText="Add reply..." />
-            </CardText>
-          </Card>
-          {replies.map(reply => (
-            <Card key={reply.id} style={styles.reply}>
-              <CardText>{reply.content}</CardText>
-            </Card>
-          ))}
+          {this.state.showReplies && (
+            <Fragment>
+              {replies.map(reply => <Reply key={reply.id} {...reply} />)}
+              <Card style={styles.reply}>
+                <CardText>
+                  <TextField hintText="Add reply..." />
+                </CardText>
+              </Card>
+            </Fragment>
+          )}
         </div>
       </div>
     );
