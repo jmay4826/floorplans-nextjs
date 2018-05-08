@@ -27,13 +27,18 @@ const update = (cache, { data: { addComment } }, { location }) => {
     variables: { id: location }
   });
 
+  console.log(getLocation);
+  console.log(addComment);
   cache.writeQuery({
     query: GET_LOCATION,
     variables: { id: location },
     data: {
       getLocation: {
         ...getLocation,
-        comments: [addComment, ...getLocation.comments]
+        comments: {
+          ...getLocation.comments,
+          incomplete: [addComment, ...getLocation.comments.incomplete]
+        }
       }
     }
   });

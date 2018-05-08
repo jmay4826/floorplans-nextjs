@@ -4,10 +4,11 @@ import Card, { CardText } from 'material-ui/Card';
 import CardHeader from 'material-ui/Card/CardHeader';
 import CardActions from 'material-ui/Card/CardActions';
 import { FlatButton, IconButton, TextField } from 'material-ui';
-import Delete from 'material-ui/svg-icons/action/delete';
 import Done from 'material-ui/svg-icons/action/done';
 
 import { Reply } from './Reply';
+import { DeleteComment } from './DeleteComment';
+import { CompleteComment } from './CompleteComment';
 import { styles } from '../lib/styles';
 
 const makeTitle = (id, i) => `${id < 1 ? 'Saving...' : ''} ${i + 1}`;
@@ -36,8 +37,10 @@ class Comment extends Component {
       author,
       content,
       replies,
+      location,
       i
     } = this.props;
+    console.log(location);
     return (
       <div key={id} style={styles.container}>
         <div style={styles.comment}>
@@ -60,12 +63,9 @@ class Comment extends Component {
               />
               {!complete && (
                 <Fragment>
-                  <IconButton>
-                    <Delete />
-                  </IconButton>
-                  <IconButton>
-                    <Done />
-                  </IconButton>
+                  {/* this will need to check if user === author */}
+                  <DeleteComment id={id} location={location} />
+                  <CompleteComment id={id} location={location} />
                 </Fragment>
               )}
             </CardActions>
@@ -87,7 +87,7 @@ class Comment extends Component {
 }
 
 Comment.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.number,
   complete: PropTypes.bool,
   updated_at: PropTypes.string,
   completed_by: PropTypes.string,
@@ -95,6 +95,7 @@ Comment.propTypes = {
   author: PropTypes.string,
   content: PropTypes.string,
   replies: PropTypes.arrayOf(PropTypes.object),
+  location: PropTypes.string,
   i: PropTypes.number
 };
 

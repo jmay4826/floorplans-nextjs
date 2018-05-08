@@ -22,6 +22,7 @@ export const GET_LOCATION = gql`
           complete
           created_at
           updated_at
+          location
           replies {
             id
             content
@@ -36,6 +37,7 @@ export const GET_LOCATION = gql`
           complete
           created_at
           updated_at
+          location
           replies {
             id
             content
