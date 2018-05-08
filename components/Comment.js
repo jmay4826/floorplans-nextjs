@@ -40,7 +40,7 @@ class Comment extends Component {
       location,
       i
     } = this.props;
-    console.log(location);
+
     return (
       <div key={id} style={styles.container}>
         <div style={styles.comment}>
@@ -87,7 +87,7 @@ class Comment extends Component {
 }
 
 Comment.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
   complete: PropTypes.bool,
   updated_at: PropTypes.string,
   completed_by: PropTypes.string,

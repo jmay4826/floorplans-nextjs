@@ -66,7 +66,7 @@ const CompleteComment = ({ id, location }) => (
 );
 
 CompleteComment.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
   location: PropTypes.string
 };
 

@@ -46,8 +46,6 @@ const DeleteComment = ({ id, location }) => (
     {deleteComment => (
       <IconButton
         onClick={() => {
-          console.log(id);
-
           deleteComment({
             variables: {
               id: +id
@@ -62,7 +60,7 @@ const DeleteComment = ({ id, location }) => (
 );
 
 DeleteComment.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
   location: PropTypes.string
 };
 
