@@ -32,6 +32,7 @@ const update = (cache, response, location) => {
       getLocation: {
         ...getLocation,
         comments: {
+          ...getLocation.comments,
           incomplete: getLocation.comments.incomplete.filter(comment => comment.id !== response.data.completeComment.id),
           completed: [completed, ...getLocation.comments.completed]
         }
