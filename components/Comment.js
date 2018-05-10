@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Card, { CardText } from 'material-ui/Card';
 import CardHeader from 'material-ui/Card/CardHeader';
 import CardActions from 'material-ui/Card/CardActions';
-import { FlatButton, IconButton, TextField } from 'material-ui';
+import { FlatButton, IconButton, TextField, CardMedia } from 'material-ui';
 import Done from 'material-ui/svg-icons/action/done';
 
 import { Reply } from './Reply';
@@ -38,6 +38,7 @@ class Comment extends Component {
       content,
       replies,
       location,
+      image,
       i
     } = this.props;
 
@@ -55,6 +56,11 @@ class Comment extends Component {
                 author
               )}
             />
+            {image && (
+              <CardMedia>
+                <img src={image} />
+              </CardMedia>
+            )}
             <CardText>{content}</CardText>
             <CardActions style={styles.actions}>
               <FlatButton

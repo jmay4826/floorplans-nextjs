@@ -11,7 +11,10 @@ const Locations = ({ filter }) => (
   <Query query={GET_LOCATIONS_BY_USER}>
     {({ loading, error, data }) => {
       if (loading) return <p>Loading</p>;
-      if (error) return <p>Error</p>;
+      if (error) {
+        console.log(error);
+        return <p>Error</p>;
+      }
 
       const locations = data.getUser.locations
         .filter(({ id, name }) =>

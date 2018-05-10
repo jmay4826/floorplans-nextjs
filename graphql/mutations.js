@@ -18,6 +18,7 @@ export const ADD_COMMENT = gql`
       id
       content
       author
+      image
       x
       y
       complete

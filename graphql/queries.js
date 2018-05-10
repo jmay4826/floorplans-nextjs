@@ -16,6 +16,7 @@ export const GET_LOCATION = gql`
         completed {
           id
           content
+          image
           author
           x
           y
@@ -31,6 +32,7 @@ export const GET_LOCATION = gql`
         incomplete {
           id
           content
+          image
           author
           x
           y

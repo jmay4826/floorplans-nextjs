@@ -7,13 +7,14 @@ import FlatButton from 'material-ui/FlatButton';
 import { ADD_COMMENT } from '../graphql/mutations';
 import { GET_LOCATION, GET_NEW_COMMENT } from '../graphql/queries';
 
-const optimisticResponse = newComment => ({
+const optimisticResponse = (newComment, image) => ({
   __typename: 'Mutation',
   addComment: {
     ...newComment,
     id: -1,
     complete: false,
     author: 'none',
+    image: '',
     updated_at: null,
     created_at: new Date().toDateString(),
     replies: [],
@@ -44,51 +45,57 @@ const update = (cache, { data: { addComment } }, { location }) => {
   });
 };
 
-const SubmitComment = ({ closeDialog }) => (
+const SubmitComment = ({ closeDialog, image }) => (
   <Query query={GET_NEW_COMMENT}>
-    {({ client, data: { newComment } }) => (
-      <Mutation
-        mutation={ADD_COMMENT}
-        optimisticResponse={optimisticResponse(newComment)}
-        update={(cache, response) => update(cache, response, newComment)}
-      >
-        {(submitComment, { error, loading }) => {
-          if (error) return <p>Error</p>;
-          if (loading) return <p>Loading</p>;
-          return (
-            <FlatButton
-              primary
-              onClick={() => {
-                submitComment({
-                  variables: {
-                    input: {
-                      ...newComment,
-                      id: undefined,
-                      __typename: undefined
+    {({ client, data: { newComment } }) => {
+      console.log(newComment);
+      return (
+        <Mutation
+          mutation={ADD_COMMENT}
+          optimisticResponse={optimisticResponse(newComment, image)}
+          update={(cache, response) =>
+            update(cache, response, newComment, image)
+          }
+        >
+          {(submitComment, { error, loading }) => {
+            if (error) return <p>Error</p>;
+            if (loading) return <p>Loading</p>;
+            return (
+              <FlatButton
+                primary
+                onClick={() => {
+                  submitComment({
+                    variables: {
+                      input: {
+                        ...newComment,
+                        image,
+                        id: undefined,
+                        __typename: undefined
+                      }
                     }
-                  }
-                });
-                client.writeData({
-                  data: {
-                    newComment: {
-                      id: newComment.id,
-                      content: '',
-                      x: 0,
-                      y: 0,
-                      location: '',
-                      __typename: 'NewComment'
+                  });
+                  client.writeData({
+                    data: {
+                      newComment: {
+                        id: newComment.id,
+                        content: '',
+                        x: 0,
+                        y: 0,
+                        location: '',
+                        __typename: 'NewComment'
+                      }
                     }
-                  }
-                });
-                closeDialog();
-              }}
-            >
-              Submit
-            </FlatButton>
-          );
-        }}
-      </Mutation>
-    )}
+                  });
+                  closeDialog();
+                }}
+              >
+                Submit
+              </FlatButton>
+            );
+          }}
+        </Mutation>
+      );
+    }}
   </Query>
 );
 
