@@ -27,6 +27,8 @@ export const GET_LOCATION = gql`
           replies {
             id
             content
+            created_at
+            author
           }
         }
         incomplete {
@@ -43,6 +45,8 @@ export const GET_LOCATION = gql`
           replies {
             id
             content
+            created_at
+            author
           }
         }
       }
