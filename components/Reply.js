@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Card, { CardText } from 'material-ui/Card';
+import Card, { CardText } from '@material-ui/core/Card';
 
 import { styles } from '../lib/styles';
 

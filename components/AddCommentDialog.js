@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Query } from 'react-apollo';
-import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import TextField from '@material-ui/core/TextField';
 
 import { SubmitComment } from './SubmitComment';
 import CancelComment from './CancelComment';

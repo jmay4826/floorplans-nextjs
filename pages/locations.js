@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import TextField from 'material-ui/TextField';
-import Card, { CardText } from 'material-ui/Card';
+import TextField from '@material-ui/core/TextField';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
-import withMui from '../lib/withMui';
+// import withMui from '../lib/withMui';
 import withData from '../lib/withData';
 import Layout from '../components/Layout';
 
@@ -21,12 +22,12 @@ class locations extends Component {
       <Layout title="Choose a location">
         <div style={styles.container}>
           <Card style={{ minWidth: '80%' }}>
-            <CardText>
+            <CardContent>
               <TextField onChange={this.handleFilter} hintText="Search" />
               <div>
                 <Locations filter={this.state.filter} />
               </div>
-            </CardText>
+            </CardContent>
           </Card>
         </div>
       </Layout>
@@ -34,4 +35,4 @@ class locations extends Component {
   }
 }
 
-export default withData(withMui(locations));
+export default withData(locations);

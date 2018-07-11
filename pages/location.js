@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Query } from 'react-apollo';
 
-import Tabs, { Tab } from 'material-ui/Tabs';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
-import withMui from '../lib/withMui';
+// import withMui from '../lib/withMui';
 import withData from '../lib/withData';
 import Layout from '../components/Layout';
 
@@ -26,8 +27,12 @@ class Location extends React.Component {
   openDialog = () => this.setState({ open: true });
 
   render() {
+    console.log(this.props);
     return (
-      <Query query={GET_LOCATION} variables={{ id: this.props.url.query.id }}>
+      <Query
+        query={GET_LOCATION}
+        variables={{ id: this.props.router.query.id }}
+      >
         {({ loading, error, data: { getLocation = {} } }) => {
           if (loading) return <div>Loading</div>;
           if (error) {
@@ -86,4 +91,4 @@ Location.propTypes = {
   url: PropTypes.object
 };
 
-export default withData(withMui(Location));
+export default withData(Location);

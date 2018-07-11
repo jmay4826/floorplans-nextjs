@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Card, { CardText } from 'material-ui/Card';
-import CardHeader from 'material-ui/Card/CardHeader';
-import CardActions from 'material-ui/Card/CardActions';
-import { FlatButton, IconButton, TextField, CardMedia } from 'material-ui';
-import Done from 'material-ui/svg-icons/action/done';
+import Card, { CardText } from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import CardMedia from '@material-ui/core/CardMedia';
 
 import { Reply } from './Reply';
 import { DeleteComment } from './DeleteComment';
@@ -63,7 +64,7 @@ class Comment extends Component {
             )}
             <CardText>{content}</CardText>
             <CardActions style={styles.actions}>
-              <FlatButton
+              <Button
                 label={`Show Replies (${replies.length})`}
                 onClick={this.toggleReplies}
               />

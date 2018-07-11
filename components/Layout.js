@@ -1,14 +1,22 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import AppBar from 'material-ui/AppBar';
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
-import Store from 'material-ui/svg-icons/action/store';
-import InsertChart from 'material-ui/svg-icons/editor/insert-chart';
-import ExitToApp from 'material-ui/svg-icons/action/exit-to-app';
-import Divider from 'material-ui/Divider';
+import AppBar from '@material-ui/core/AppBar';
+import Typography from '@material-ui/core/Typography';
+import Drawer from '@material-ui/core/Drawer';
+import ListItem from '@material-ui/core/ListItem';
+import Store from '@material-ui/icons/Store';
+import InsertChart from '@material-ui/icons/InsertChart';
+import ExitToApp from '@material-ui/icons/ExitToApp';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+
 import Link from 'next/link';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 class Layout extends React.Component {
   constructor(props) {
@@ -32,40 +40,39 @@ class Layout extends React.Component {
             content="width=device-width, initial-scale=1.0"
           />
         </Head>
-        <style jsx global>
-          {`
-            body {
-              margin: 0;
-              padding-top: 70px;
-            }
-          `}
-        </style>
-
-        <AppBar
-          title={title}
-          style={{ position: 'fixed', top: 0 }}
-          onLeftIconButtonClick={this.openDrawer}
-        />
+        <AppBar position="sticky" color="secondary">
+          <Toolbar>
+            <IconButton
+              aria-label="menu"
+              onClick={this.state.open ? this.closeDrawer : this.openDrawer}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="title">{title}</Typography>
+          </Toolbar>
+        </AppBar>
         <Drawer
           open={this.state.open}
-          docked={false}
-          onRequestChange={open => this.setState({ open })}
+          onClose={() => this.setState({ open: false })}
         >
-          <AppBar title="Menu" showMenuIconButton={false} />
-          <Link prefetch href="/locations">
-            <MenuItem
+          {/* <AppBar title="Menu" showMenuIconButton={false} /> */}
+          <List>
+            <Link prefetch href="/locations">
+              <ListItem button onClick={this.closeDrawer}>
+                <ListItemIcon>
+                  <Store />
+                </ListItemIcon>
+                <ListItemText>Locations</ListItemText>
+              </ListItem>
+            </Link>
+            <ListItem
               onClick={this.closeDrawer}
-              primaryText="Locations"
-              leftIcon={<Store />}
+              primaryText="Analytics"
+              leftIcon={<InsertChart />}
             />
-          </Link>
-          <MenuItem
-            onClick={this.closeDrawer}
-            primaryText="Analytics"
-            leftIcon={<InsertChart />}
-          />
-          <Divider />
-          <MenuItem primaryText="Logout" leftIcon={<ExitToApp />} />
+            <Divider />
+            <ListItem primaryText="Logout" leftIcon={<ExitToApp />} />
+          </List>
         </Drawer>
         {this.props.children}
       </Fragment>

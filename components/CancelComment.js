@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FlatButton from 'material-ui/FlatButton';
+import Button from '@material-ui/core/Button';
 
 const CancelAction = ({ closeDialog }) => (
-  <FlatButton onClick={closeDialog}>Cancel</FlatButton>
+  <Button onClick={closeDialog}>Cancel</Button>
 );
 
 CancelAction.propTypes = {

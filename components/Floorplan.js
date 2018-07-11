@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Query } from 'react-apollo';
 
-import Paper from 'material-ui/Card';
+import Paper from '@material-ui/core/Card';
 
 import { Markers } from '../components/Markers';
 import { styles } from '../lib/styles';

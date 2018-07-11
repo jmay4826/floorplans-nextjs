@@ -1,5 +1,5 @@
 import React from 'react';
-import withMui from '../lib/withMui';
+// import withMui from '../lib/withMui';
 import Layout from '../components/Layout';
 import { Login } from '../components/Login';
 
@@ -9,4 +9,4 @@ const Index = () => (
   </Layout>
 );
 
-export default withMui(Index);
+export default Index;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Query } from 'react-apollo';
 import Link from 'next/link';
 
-import FlatButton from 'material-ui/FlatButton';
+import Button from '@material-ui/core/Button';
 
 import { GET_LOCATIONS_BY_USER } from '../graphql/queries';
 
@@ -22,9 +22,7 @@ const Locations = ({ filter }) => (
             name.toLowerCase().includes(filter.toLowerCase()))
         .map(({ id, name }) => (
           <Link key={id} prefetch href={`/location?id=${id}`}>
-            <FlatButton style={{ margin: '5px' }}>
-              {`${name} (${id})`}
-            </FlatButton>
+            <Button style={{ margin: '5px' }}>{`${name} (${id})`}</Button>
           </Link>
         ));
 

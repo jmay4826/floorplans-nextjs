@@ -2,9 +2,10 @@ import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 import Router from 'next/router';
 
-import TextField from 'material-ui/TextField';
-import Card, { CardText } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import TextField from '@material-ui/core/TextField';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
 
 class Login extends Component {
   constructor(props) {
@@ -32,23 +33,23 @@ class Login extends Component {
       <Fragment>
         <div className="container">
           <Card>
-            <CardText>
-              <div className="login">
-                <TextField
-                  value={this.state.username}
-                  hintText="Username"
-                  onChange={e => this.setState({ username: e.target.value })}
-                />
-                <TextField
-                  value={this.state.password}
-                  type="Password"
-                  hintText="Password"
-                  onChange={e => this.setState({ password: e.target.value })}
-                />
+            {/* <CardContent> */}
+            <div className="login">
+              <TextField
+                value={this.state.username}
+                hintText="Username"
+                onChange={e => this.setState({ username: e.target.value })}
+              />
+              <TextField
+                value={this.state.password}
+                type="Password"
+                hintText="Password"
+                onChange={e => this.setState({ password: e.target.value })}
+              />
 
-                <FlatButton onClick={this.handleSubmit}>Submit</FlatButton>
-              </div>
-            </CardText>
+              <Button onClick={this.handleSubmit}>Submit</Button>
+            </div>
+            {/* </CardContent> */}
           </Card>
         </div>
 

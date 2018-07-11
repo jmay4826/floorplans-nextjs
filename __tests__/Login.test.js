@@ -1,8 +1,8 @@
 /* eslint-env jest */
 import { shallow } from 'enzyme';
 import React from 'react';
-import TextField from 'material-ui/TextField';
-import FlatButton from 'material-ui/FlatButton/FlatButton';
+import TextField from '@material-ui/core/TextField';
+import FlatButton from '@material-ui/core/FlatButton/FlatButton';
 
 import { Login } from '../components/Login';
 

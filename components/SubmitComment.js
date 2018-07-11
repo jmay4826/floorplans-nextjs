@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Mutation, Query } from 'react-apollo';
 
-import FlatButton from 'material-ui/FlatButton';
+import Button from '@material-ui/core/Button';
 
 import { ADD_COMMENT } from '../graphql/mutations';
 import { GET_LOCATION, GET_NEW_COMMENT } from '../graphql/queries';
@@ -61,7 +61,7 @@ const SubmitComment = ({ closeDialog, image }) => (
             if (error) return <p>Error</p>;
             if (loading) return <p>Loading</p>;
             return (
-              <FlatButton
+              <Button
                 primary
                 onClick={() => {
                   submitComment({
@@ -90,7 +90,7 @@ const SubmitComment = ({ closeDialog, image }) => (
                 }}
               >
                 Submit
-              </FlatButton>
+              </Button>
             );
           }}
         </Mutation>
