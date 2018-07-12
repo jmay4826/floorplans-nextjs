@@ -55,7 +55,17 @@ class Layout extends React.Component {
           open={this.state.open}
           onClose={() => this.setState({ open: false })}
         >
-          {/* <AppBar title="Menu" showMenuIconButton={false} /> */}
+          <AppBar position="sticky" color="secondary">
+            <Toolbar>
+              <IconButton
+                aria-label="menu"
+                onClick={this.state.open ? this.closeDrawer : this.openDrawer}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="title">{title}</Typography>
+            </Toolbar>
+          </AppBar>
           <List>
             <Link prefetch href="/locations">
               <ListItem button onClick={this.closeDrawer}>
@@ -65,13 +75,19 @@ class Layout extends React.Component {
                 <ListItemText>Locations</ListItemText>
               </ListItem>
             </Link>
-            <ListItem
-              onClick={this.closeDrawer}
-              primaryText="Analytics"
-              leftIcon={<InsertChart />}
-            />
+            <ListItem button onClick={this.closeDrawer}>
+              <ListItemIcon>
+                <InsertChart />
+              </ListItemIcon>
+              <ListItemText>Analytics</ListItemText>
+            </ListItem>
             <Divider />
-            <ListItem primaryText="Logout" leftIcon={<ExitToApp />} />
+            <ListItem button>
+              <ListItemIcon>
+                <ExitToApp />
+              </ListItemIcon>
+              <ListItemText>Logout</ListItemText>
+            </ListItem>
           </List>
         </Drawer>
         {this.props.children}
