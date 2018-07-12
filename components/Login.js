@@ -33,23 +33,23 @@ class Login extends Component {
       <Fragment>
         <div className="container">
           <Card>
-            {/* <CardContent> */}
-            <div className="login">
-              <TextField
-                value={this.state.username}
-                hintText="Username"
-                onChange={e => this.setState({ username: e.target.value })}
-              />
-              <TextField
-                value={this.state.password}
-                type="Password"
-                hintText="Password"
-                onChange={e => this.setState({ password: e.target.value })}
-              />
+            <CardContent>
+              <div className="login">
+                <TextField
+                  value={this.state.username}
+                  label="Username"
+                  onChange={e => this.setState({ username: e.target.value })}
+                />
+                <TextField
+                  value={this.state.password}
+                  type="Password"
+                  label="Password"
+                  onChange={e => this.setState({ password: e.target.value })}
+                />
 
-              <Button onClick={this.handleSubmit}>Submit</Button>
-            </div>
-            {/* </CardContent> */}
+                <Button onClick={this.handleSubmit}>Submit</Button>
+              </div>
+            </CardContent>
           </Card>
         </div>
 
