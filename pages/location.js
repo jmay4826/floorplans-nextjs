@@ -60,25 +60,26 @@ class Location extends React.Component {
                 open={this.state.open}
                 closeDialog={this.closeDialog}
               />
-              <Tabs>
+              <Tabs
+                centered
+                value={this.state.complete ? 'complete' : 'incomplete'}
+                onChange={() =>
+                  this.setState(prev => ({ complete: !prev.complete }))
+                }
+              >
                 <Tab
+                  value="incomplete"
                   label={`Incomplete (${incomplete.length})`}
-                  onActive={() => {
-                    this.setState({ complete: false });
-                  }}
-                >
-                  <Comments comments={incomplete} />
-                </Tab>
+                />
 
                 <Tab
+                  value="complete"
                   label={`Recently Completed (${completed.length})`}
-                  onActive={() => {
-                    this.setState({ complete: true });
-                  }}
-                >
-                  <Comments comments={completed} />
-                </Tab>
+                />
               </Tabs>
+              <Comments
+                comments={this.state.complete ? completed : incomplete}
+              />
             </Layout>
           );
         }}

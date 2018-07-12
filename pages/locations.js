@@ -23,7 +23,7 @@ class locations extends Component {
         <div style={styles.container}>
           <Card style={{ minWidth: '80%' }}>
             <CardContent>
-              <TextField onChange={this.handleFilter} hintText="Search" />
+              <TextField onChange={this.handleFilter} label="Search" />
               <div>
                 <Locations filter={this.state.filter} />
               </div>
