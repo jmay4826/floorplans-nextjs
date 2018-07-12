@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Card, { CardText } from '@material-ui/core/Card';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
@@ -11,6 +12,8 @@ import { Reply } from './Reply';
 import { DeleteComment } from './DeleteComment';
 import { CompleteComment } from './CompleteComment';
 import { styles } from '../lib/styles';
+
+const S3PATH = 'https://s3.us-east-2.amazonaws.com/floorplans-uploads/';
 
 const makeTitle = (id, i) => `${id < 1 ? 'Saving...' : ''} ${i + 1}`;
 const makeSubtitle = (complete, updated_at, completed_by, created_at, author) =>
@@ -58,16 +61,17 @@ class Comment extends Component {
               )}
             />
             {image && (
-              <CardMedia>
-                <img src={image} />
-              </CardMedia>
-            )}
-            <CardText>{content}</CardText>
-            <CardActions style={styles.actions}>
-              <Button
-                label={`Show Replies (${replies.length})`}
-                onClick={this.toggleReplies}
+              <CardMedia
+                style={{ height: '100px' }}
+                title="Comment"
+                image={`${S3PATH}${location}/${id}.${image}`}
               />
+            )}
+            <CardContent>{content}</CardContent>
+            <CardActions style={styles.actions}>
+              <Button size="small" onClick={this.toggleReplies}>
+                {`Show Replies (${replies.length})`}
+              </Button>
               {!complete && (
                 <Fragment>
                   {/* this will need to check if user === author */}
@@ -81,9 +85,9 @@ class Comment extends Component {
             <Fragment>
               {replies.map(reply => <Reply key={reply.id} {...reply} />)}
               <Card style={styles.reply}>
-                <CardText>
-                  <TextField hintText="Add reply..." />
-                </CardText>
+                <CardContent>
+                  <TextField label="Add reply..." />
+                </CardContent>
               </Card>
             </Fragment>
           )}

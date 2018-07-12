@@ -5,7 +5,6 @@ import { Query } from 'react-apollo';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-// import withMui from '../lib/withMui';
 import withData from '../lib/withData';
 import Layout from '../components/Layout';
 

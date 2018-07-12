@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Card, { CardText } from '@material-ui/core/Card';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
 import { styles } from '../lib/styles';
 
@@ -9,10 +10,10 @@ const Reply = ({
 }) => (
   // console.log(rest);
   <Card key={id} style={styles.reply}>
-    <CardText>
+    <CardContent>
       {content}
       {author} - {created_at}
-    </CardText>
+    </CardContent>
   </Card>
 );
 Reply.propTypes = {
