@@ -23,7 +23,7 @@ class MyApp extends App {
 
   render() {
     const { Component, pageProps, router } = this.props;
-    console.log(this.props);
+
     return (
       <Container>
         {/* Wrap every page in Jss and Theme providers */}

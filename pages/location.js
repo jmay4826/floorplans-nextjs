@@ -26,7 +26,6 @@ class Location extends React.Component {
   openDialog = () => this.setState({ open: true });
 
   render() {
-    console.log(this.props);
     return (
       <Query
         query={GET_LOCATION}

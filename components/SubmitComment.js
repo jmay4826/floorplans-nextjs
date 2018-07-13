@@ -28,8 +28,6 @@ const update = (cache, { data: { addComment } }, { location }) => {
     variables: { id: location }
   });
 
-  console.log(getLocation);
-  console.log(addComment);
   cache.writeQuery({
     query: GET_LOCATION,
     variables: { id: location },
@@ -47,55 +45,52 @@ const update = (cache, { data: { addComment } }, { location }) => {
 
 const SubmitComment = ({ closeDialog, image }) => (
   <Query query={GET_NEW_COMMENT}>
-    {({ client, data: { newComment } }) => {
-      console.log(newComment);
-      return (
-        <Mutation
-          mutation={ADD_COMMENT}
-          optimisticResponse={optimisticResponse(newComment, image)}
-          update={(cache, response) =>
-            update(cache, response, newComment, image)
-          }
-        >
-          {(submitComment, { error, loading }) => {
-            if (error) return <p>Error</p>;
-            if (loading) return <p>Loading</p>;
-            return (
-              <Button
-                primary
-                onClick={() => {
-                  submitComment({
-                    variables: {
-                      input: {
-                        ...newComment,
-                        image,
-                        id: undefined,
-                        __typename: undefined
-                      }
+    {({ client, data: { newComment } }) => (
+      <Mutation
+        mutation={ADD_COMMENT}
+        optimisticResponse={optimisticResponse(newComment, image)}
+        update={(cache, response) =>
+          update(cache, response, newComment, image)
+        }
+      >
+        {(submitComment, { error, loading }) => {
+          if (error) return <p>Error</p>;
+          if (loading) return <p>Loading</p>;
+          return (
+            <Button
+              primary
+              onClick={() => {
+                submitComment({
+                  variables: {
+                    input: {
+                      ...newComment,
+                      image,
+                      id: undefined,
+                      __typename: undefined
                     }
-                  });
-                  client.writeData({
-                    data: {
-                      newComment: {
-                        id: newComment.id,
-                        content: '',
-                        x: 0,
-                        y: 0,
-                        location: '',
-                        __typename: 'NewComment'
-                      }
+                  }
+                });
+                client.writeData({
+                  data: {
+                    newComment: {
+                      id: newComment.id,
+                      content: '',
+                      x: 0,
+                      y: 0,
+                      location: '',
+                      __typename: 'NewComment'
                     }
-                  });
-                  closeDialog();
-                }}
-              >
+                  }
+                });
+                closeDialog();
+              }}
+            >
                 Submit
-              </Button>
-            );
-          }}
-        </Mutation>
-      );
-    }}
+            </Button>
+          );
+        }}
+      </Mutation>
+    )}
   </Query>
 );
 

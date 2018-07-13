@@ -17,14 +17,13 @@ const optimisticResponse = (id, location) => ({
   }
 });
 const update = (cache, response, location) => {
-  console.log('update', response);
   const { getLocation } = cache.readQuery({
     query: GET_LOCATION,
     variables: { id: location }
   });
 
   const completed = getLocation.comments.incomplete.find(comment => comment.id === response.data.completeComment.id);
-  console.log(completed);
+
   cache.writeQuery({
     query: GET_LOCATION,
     variables: { id: location },
@@ -50,8 +49,6 @@ const CompleteComment = ({ id, location }) => (
     {completeComment => (
       <IconButton
         onClick={() => {
-          console.log(id);
-
           completeComment({
             variables: {
               id: +id
