@@ -49,16 +49,14 @@ const SubmitComment = ({ closeDialog, image }) => (
       <Mutation
         mutation={ADD_COMMENT}
         optimisticResponse={optimisticResponse(newComment, image)}
-        update={(cache, response) =>
-          update(cache, response, newComment, image)
-        }
+        update={(cache, response) => update(cache, response, newComment, image)}
       >
         {(submitComment, { error, loading }) => {
           if (error) return <p>Error</p>;
           if (loading) return <p>Loading</p>;
           return (
             <Button
-              primary
+              color="primary"
               onClick={() => {
                 submitComment({
                   variables: {
@@ -85,7 +83,7 @@ const SubmitComment = ({ closeDialog, image }) => (
                 closeDialog();
               }}
             >
-                Submit
+              Submit
             </Button>
           );
         }}

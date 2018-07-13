@@ -36,7 +36,7 @@ class AddCommentDialog extends React.Component {
   render() {
     const { open, closeDialog } = this.props;
     return (
-      <Dialog open={open} onClose={closeDialog} autoScrollBodyContent={true}>
+      <Dialog open={open} onClose={closeDialog} scroll="paper">
         <DialogTitle>Add Comment</DialogTitle>
         <DialogContent>
           <Query query={GET_NEW_COMMENT}>
