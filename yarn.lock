@@ -2230,10 +2230,6 @@ caniuse-lite@^1.0.30000844:
   version "1.0.30000865"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000865.tgz#70026616e8afe6e1442f8bb4e1092987d81a2f25"
 
-carbon-icons@^6.3.1:
-  version "6.3.1"
-  resolved "https://registry.yarnpkg.com/carbon-icons/-/carbon-icons-6.3.1.tgz#8e2d8f7f5feacdff21b71d439159db2473bc4fa8"
-
 case-sensitive-paths-webpack-plugin@2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/case-sensitive-paths-webpack-plugin/-/case-sensitive-paths-webpack-plugin-2.1.1.tgz#3d29ced8c1f124bf6f53846fb3f5894731fdc909"
