@@ -8,11 +8,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import AddAPhoto from '@material-ui/icons/AddAPhoto';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 import { SubmitComment } from './SubmitComment';
 import CancelComment from './CancelComment';
 import { GET_NEW_COMMENT } from '../graphql/queries';
-import { Typography, Button } from '../node_modules/@material-ui/core';
 
 class AddCommentDialog extends React.Component {
   constructor(props) {
