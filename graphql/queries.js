@@ -1,5 +1,28 @@
 import gql from 'graphql-tag';
 
+export const fragments = {
+  comments: gql`
+    fragment LocationComments on Comment {
+      id
+      content
+      image
+      author
+      x
+      y
+      complete
+      created_at
+      updated_at
+      location
+      replies {
+        id
+        content
+        created_at
+        author
+      }
+    }
+  `
+};
+
 export const GET_LOCATION = gql`
   query getLocation($id: String!) {
     getLocation(id: $id) {
@@ -14,44 +37,15 @@ export const GET_LOCATION = gql`
       width
       comments {
         completed {
-          id
-          content
-          image
-          author
-          x
-          y
-          complete
-          created_at
-          updated_at
-          location
-          replies {
-            id
-            content
-            created_at
-            author
-          }
+          ...LocationComments
         }
         incomplete {
-          id
-          content
-          image
-          author
-          x
-          y
-          complete
-          created_at
-          updated_at
-          location
-          replies {
-            id
-            content
-            created_at
-            author
-          }
+          ...LocationComments
         }
       }
     }
   }
+  ${fragments.comments}
 `;
 
 export const GET_NEW_COMMENT = gql`
